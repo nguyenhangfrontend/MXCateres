@@ -1,4 +1,110 @@
+import { CustomerInfoType } from 'src/src/components/customerInfo/type';
 import { WaitingTimeDataType } from './types';
+import dayjs from 'dayjs';
+export const defaultSearchValue = {
+  from: dayjs().startOf('day'),
+  to: dayjs().endOf('day'),
+  workingShift: [],
+  status: [],
+};
+export const workingShift = [
+  { key: 1, value: '8:00 - 12:00' },
+  { key: 2, value: '12:00 - 18:00' },
+  { key: 3, value: '18:00 - 23:00' },
+];
+export const orderStatus = [
+  { key: 1, value: 'Recieved' },
+  { key: 2, value: 'Watting' },
+  { key: 3, value: 'No order' },
+];
+export const names = [
+  'Oliver Hansen',
+  'Van Henry',
+  'April Tucker',
+  'Ralph Hubbard',
+  'Omar Alexander',
+  'Carlos Abbott',
+  'Miriam Wagner',
+  'Bradley Wilkerson',
+  'Virginia Andrews',
+  'Kelly Snyder',
+];
+export const defaultDataCustomer: CustomerInfoType = {
+  customerId: 'CUST_123456',
+  lastSeenAt: 'Mon Jan 15 2024 03:30:00 GMT+0000',
+  parts: [
+    {
+      type: 'top',
+      imageUrl: 'https://www.lockhatters.com/cdn/shop/files/town-coke_1200x.jpg?v=1744018963',
+    },
+    {
+      type: 'bottom',
+      imageUrl:
+        'https://dynamic.zacdn.com/5FqlqIpBmS7bUtdJyESm37oIZ74=/filters:quality(70):format(webp)/https://static-ph.zacdn.com/p/trendyshop-8979-1765563-2.jpg',
+    },
+    {
+      type: 'top',
+      imageUrl: 'https://www.lockhatters.com/cdn/shop/files/town-coke_1200x.jpg?v=1744018963',
+    },
+    {
+      type: 'bottom',
+      imageUrl:
+        'https://dynamic.zacdn.com/5FqlqIpBmS7bUtdJyESm37oIZ74=/filters:quality(70):format(webp)/https://static-ph.zacdn.com/p/trendyshop-8979-1765563-2.jpg',
+    },
+    {
+      type: 'top',
+      imageUrl: 'https://www.lockhatters.com/cdn/shop/files/town-coke_1200x.jpg?v=1744018963',
+    },
+    {
+      type: 'bottom',
+      imageUrl:
+        'https://dynamic.zacdn.com/5FqlqIpBmS7bUtdJyESm37oIZ74=/filters:quality(70):format(webp)/https://static-ph.zacdn.com/p/trendyshop-8979-1765563-2.jpg',
+    },
+  ],
+  fullbodyUrl:
+    'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
+  zones: [
+    {
+      zone: 'order',
+      duration: 0,
+      start: '2025-08-14T04:15:00.000Z',
+      end: '2025-08-14T04:15:00.000Z',
+    },
+    {
+      zone: 'pickup',
+      start: '2025-08-14T04:15:00.000Z',
+      end: '2025-08-14T04:15:00.000Z',
+      duration: 0,
+    },
+  ],
+  totalDuration: '0 minutes',
+  processingDuration: '0 minutes',
+  status: 'Picking Up',
+  evidents: [
+    {
+      imageUrl:
+        'https://www.thesun.co.uk/wp-content/uploads/2024/01/2014-u-k-services-companies-830630811.jpg?strip=all&w=960',
+      capturedAt: '2025-08-14T04:15:00.000Z',
+      label: 'Pickup Start',
+    },
+    {
+      imageUrl:
+        'https://www.allrecipes.com/thmb/gkOFZOTGMgF0gQOkW7pMq2jDGHY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Starbucks-Cup-Barista-3x2-1-7f08baa3c98347dcabb06358dbe030a1.jpg',
+      capturedAt: '2025-08-14T04:15:00.000Z',
+      label: 'Pickup End',
+    },
+    {
+      imageUrl: 'https://about.starbucks.com/uploads/2021/04/SBX20210405-Greener-Cup-Timeline-Feature.jpg',
+      capturedAt: '2025-08-14T04:15:00.000Z',
+      label: 'Recieved Start',
+    },
+    {
+      imageUrl: 'https://i.insider.com/5f68b70057b7da001ee12c18?width=1000&format=jpeg&auto=webp',
+      capturedAt: '2025-08-14T04:15:00.000Z',
+      label: 'Recived End',
+    },
+  ],
+};
 
 export const tableData: WaitingTimeDataType[] = [
   {
@@ -9,9 +115,12 @@ export const tableData: WaitingTimeDataType[] = [
     cameraId: 'CAM-1',
     startTime: 'Mon Jan 15 2024 10:30:00 GMT+0000 (Coordinated Universal Time)',
     endTime: 'Mon Jan 15 2024 10:35:30 GMT+0000 (Coordinated Universal Time)',
+    status: 1,
+    IdentificationPhoto:
+      'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
-        'https://media.istockphoto.com/id/153728366/vi/anh/m%E1%BB%8Di-ng%C6%B0%E1%BB%9Di-%C4%91ang-n%C3%B3i-chuy%E1%BB%87n.jpg?s=612x612&w=0&k=20&c=qrVFkKsyipvQQQ6iWgfJPlaiM7Xhdpzf73jh1tmgULs=',
+        'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
       width: 1920,
       height: 1080,
       frames: [
@@ -33,11 +142,14 @@ export const tableData: WaitingTimeDataType[] = [
     date: '2024-01-16T11:00:00.000Z',
     customerId: 'CUST002',
     cameraId: 'CAM-2',
-    startTime: 'Tue Jan 16 2024 11:00:00 GMT+0000 (Coordinated Universal Time)',
-    endTime: 'Tue Jan 16 2024 11:07:45 GMT+0000 (Coordinated Universal Time)',
+    startTime: '2025-08-22 10:00:00',
+    endTime: '2025-08-22 10:12:00',
+    status: 2,
+    IdentificationPhoto:
+      'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
-        'https://media.istockphoto.com/id/153728366/vi/anh/m%E1%BB%8Di-ng%C6%B0%E1%BB%9Di-%C4%91ang-n%C3%B3i-chuy%E1%BB%87n.jpg?s=612x612&w=0&k=20&c=qrVFkKsyipvQQQ6iWgfJPlaiM7Xhdpzf73jh1tmgULs=',
+        'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
       width: 1920,
       height: 1080,
       frames: [
@@ -61,9 +173,12 @@ export const tableData: WaitingTimeDataType[] = [
     cameraId: 'CAM-3',
     startTime: 'Wed Jan 17 2024 09:45:00 GMT+0000 (Coordinated Universal Time)',
     endTime: 'Wed Jan 17 2024 09:52:10 GMT+0000 (Coordinated Universal Time)',
+    status: 3,
+    IdentificationPhoto:
+      'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
-        'https://media.istockphoto.com/id/153728366/vi/anh/m%E1%BB%8Di-ng%C6%B0%E1%BB%9Di-%C4%91ang-n%C3%B3i-chuy%E1%BB%87n.jpg?s=612x612&w=0&k=20&c=qrVFkKsyipvQQQ6iWgfJPlaiM7Xhdpzf73jh1tmgULs=',
+        'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
       width: 1280,
       height: 720,
       frames: [
@@ -87,9 +202,12 @@ export const tableData: WaitingTimeDataType[] = [
     cameraId: 'CAM-4',
     startTime: 'Thu Jan 18 2024 14:20:00 GMT+0000 (Coordinated Universal Time)',
     endTime: 'Thu Jan 18 2024 14:25:40 GMT+0000 (Coordinated Universal Time)',
+    status: 3,
+    IdentificationPhoto:
+      'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
-        'https://media.istockphoto.com/id/153728366/vi/anh/m%E1%BB%8Di-ng%C6%B0%E1%BB%9Di-%C4%91ang-n%C3%B3i-chuy%E1%BB%87n.jpg?s=612x612&w=0&k=20&c=qrVFkKsyipvQQQ6iWgfJPlaiM7Xhdpzf73jh1tmgULs=',
+        'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
       width: 1920,
       height: 1080,
       frames: [
@@ -111,11 +229,14 @@ export const tableData: WaitingTimeDataType[] = [
     date: '2024-01-19T12:15:00.000Z',
     customerId: 'CUST005',
     cameraId: 'CAM-5',
-    startTime: 'Fri Jan 19 2024 12:15:00 GMT+0000 (Coordinated Universal Time)',
-    endTime: 'Fri Jan 19 2024 12:20:15 GMT+0000 (Coordinated Universal Time)',
+    startTime: '2025-08-22 10:00:00',
+    endTime: '2025-08-22 10:25:00',
+    status: 2,
+    IdentificationPhoto:
+      'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
-        'https://media.istockphoto.com/id/153728366/vi/anh/m%E1%BB%8Di-ng%C6%B0%E1%BB%9Di-%C4%91ang-n%C3%B3i-chuy%E1%BB%87n.jpg?s=612x612&w=0&k=20&c=qrVFkKsyipvQQQ6iWgfJPlaiM7Xhdpzf73jh1tmgULs=',
+        'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
       width: 1920,
       height: 1080,
       frames: [
@@ -139,9 +260,12 @@ export const tableData: WaitingTimeDataType[] = [
     cameraId: 'CAM-6',
     startTime: 'Sat Jan 20 2024 08:40:00 GMT+0000 (Coordinated Universal Time)',
     endTime: 'Sat Jan 20 2024 08:45:55 GMT+0000 (Coordinated Universal Time)',
+    status: 1,
+    IdentificationPhoto:
+      'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
-        'https://media.istockphoto.com/id/153728366/vi/anh/m%E1%BB%8Di-ng%C6%B0%E1%BB%9Di-%C4%91ang-n%C3%B3i-chuy%E1%BB%87n.jpg?s=612x612&w=0&k=20&c=qrVFkKsyipvQQQ6iWgfJPlaiM7Xhdpzf73jh1tmgULs=',
+        'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
       width: 1280,
       height: 720,
       frames: [
@@ -163,11 +287,14 @@ export const tableData: WaitingTimeDataType[] = [
     date: '2024-01-21T15:50:00.000Z',
     customerId: 'CUST007',
     cameraId: 'CAM-7',
-    startTime: 'Sun Jan 21 2024 15:50:00 GMT+0000 (Coordinated Universal Time)',
-    endTime: 'Sun Jan 21 2024 15:57:30 GMT+0000 (Coordinated Universal Time)',
+    startTime: '2025-08-22 10:00:00',
+    endTime: '2025-08-22 10:25:00',
+    status: 2,
+    IdentificationPhoto:
+      'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
-        'https://media.istockphoto.com/id/153728366/vi/anh/m%E1%BB%8Di-ng%C6%B0%E1%BB%9Di-%C4%91ang-n%C3%B3i-chuy%E1%BB%87n.jpg?s=612x612&w=0&k=20&c=qrVFkKsyipvQQQ6iWgfJPlaiM7Xhdpzf73jh1tmgULs=',
+        'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
       width: 1920,
       height: 1080,
       frames: [
@@ -191,9 +318,12 @@ export const tableData: WaitingTimeDataType[] = [
     cameraId: 'CAM-8',
     startTime: 'Mon Jan 22 2024 10:10:00 GMT+0000 (Coordinated Universal Time)',
     endTime: 'Mon Jan 22 2024 10:15:35 GMT+0000 (Coordinated Universal Time)',
+    status: 3,
+    IdentificationPhoto:
+      'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
-        'https://media.istockphoto.com/id/153728366/vi/anh/m%E1%BB%8Di-ng%C6%B0%E1%BB%9Di-%C4%91ang-n%C3%B3i-chuy%E1%BB%87n.jpg?s=612x612&w=0&k=20&c=qrVFkKsyipvQQQ6iWgfJPlaiM7Xhdpzf73jh1tmgULs=',
+        'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
       width: 1920,
       height: 1080,
       frames: [
@@ -215,11 +345,14 @@ export const tableData: WaitingTimeDataType[] = [
     date: '2024-01-23T13:30:00.000Z',
     customerId: 'CUST009',
     cameraId: 'CAM-9',
-    startTime: 'Tue Jan 23 2024 13:30:00 GMT+0000 (Coordinated Universal Time)',
-    endTime: 'Tue Jan 23 2024 13:36:45 GMT+0000 (Coordinated Universal Time)',
+    startTime: '2025-08-22 10:00:00',
+    endTime: '2025-08-22 10:25:00',
+    status: 1,
+    IdentificationPhoto:
+      'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
-        'https://media.istockphoto.com/id/153728366/vi/anh/m%E1%BB%8Di-ng%C6%B0%E1%BB%9Di-%C4%91ang-n%C3%B3i-chuy%E1%BB%87n.jpg?s=612x612&w=0&k=20&c=qrVFkKsyipvQQQ6iWgfJPlaiM7Xhdpzf73jh1tmgULs=',
+        'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
       width: 1920,
       height: 1080,
       frames: [
@@ -241,11 +374,14 @@ export const tableData: WaitingTimeDataType[] = [
     date: '2024-01-24T09:00:00.000Z',
     customerId: 'CUST010',
     cameraId: 'CAM-10',
-    startTime: 'Wed Jan 24 2024 09:00:00 GMT+0000 (Coordinated Universal Time)',
-    endTime: 'Wed Jan 24 2024 09:06:25 GMT+0000 (Coordinated Universal Time)',
+    startTime: '2025-08-22 10:00:00',
+    endTime: '2025-08-22 10:12:00',
+    status: 1,
+    IdentificationPhoto:
+      'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
-        'https://media.istockphoto.com/id/153728366/vi/anh/m%E1%BB%8Di-ng%C6%B0%E1%BB%9Di-%C4%91ang-n%C3%B3i-chuy%E1%BB%87n.jpg?s=612x612&w=0&k=20&c=qrVFkKsyipvQQQ6iWgfJPlaiM7Xhdpzf73jh1tmgULs=',
+        'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
       width: 1280,
       height: 720,
       frames: [
@@ -267,11 +403,14 @@ export const tableData: WaitingTimeDataType[] = [
     date: '2024-01-25T16:10:00.000Z',
     customerId: 'CUST011',
     cameraId: 'CAM-11',
-    startTime: 'Thu Jan 25 2024 16:10:00 GMT+0000 (Coordinated Universal Time)',
-    endTime: 'Thu Jan 25 2024 16:15:50 GMT+0000 (Coordinated Universal Time)',
+    startTime: '2025-08-22 10:00:00',
+    endTime: '2025-08-22 10:12:00',
+    status: 1,
+    IdentificationPhoto:
+      'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
-        'https://media.istockphoto.com/id/153728366/vi/anh/m%E1%BB%8Di-ng%C6%B0%E1%BB%9Di-%C4%91ang-n%C3%B3i-chuy%E1%BB%87n.jpg?s=612x612&w=0&k=20&c=qrVFkKsyipvQQQ6iWgfJPlaiM7Xhdpzf73jh1tmgULs=',
+        'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
       width: 1920,
       height: 1080,
       frames: [

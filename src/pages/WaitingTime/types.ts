@@ -1,3 +1,5 @@
+import { Dayjs } from 'dayjs';
+
 export type WaitingTimeDataType = {
   id: number;
   waitingTimeId: string;
@@ -7,6 +9,8 @@ export type WaitingTimeDataType = {
   startTime: string;
   endTime: string;
   evidenceThumbnail: envidenceType;
+  IdentificationPhoto: string;
+  status: number;
 };
 
 export type envidenceType = {
@@ -25,6 +29,17 @@ export type frameDataType = {
   confidence: number;
 };
 
+export type SearchFormType = {
+  from: Dayjs | null;
+  to: Dayjs | null;
+  workingShift: (string | number)[];
+  status: number[];
+};
+
 export type ColumnType = {
   detailWaitingTime: (data: any) => void;
+};
+
+export type SearchFormPropsType = {
+  handleSearch: (values: SearchFormType) => void;
 };

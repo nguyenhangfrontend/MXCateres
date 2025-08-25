@@ -1,7 +1,4 @@
 import { useState } from 'react';
-// import { Link } from 'react-router';
-import { EyeCloseIcon, EyeIcon } from '@/icons';
-import Label from '@components/form/Label';
 import Input from '@components/form/input/InputField';
 // import Checkbox from '@components/form/input/Checkbox';
 import Button from '@components/ui/button/Button';
@@ -19,15 +16,11 @@ export default function SignInForm() {
   const [login] = useLoginMutation();
 
   const {
-    register,
     handleSubmit,
-    watch,
     control,
     formState: { errors },
   } = useForm<loginFormType>({ mode: 'onChange' });
   const [showPassword, setShowPassword] = useState(false);
-  // console.log('errors', errors);
-  // console.log(watch('email'));
   const onLogin: SubmitHandler<loginFormType> = async (values) => {
     setLoading(true);
     const result: any = await login(values);
@@ -112,7 +105,7 @@ export default function SignInForm() {
                 </div>
 
                 <div>
-                  <Button className='w-full' size='sm' type='submit'>
+                  <Button className='w-full' width={120} size='md' type='submit'>
                     Sign in
                   </Button>
                 </div>

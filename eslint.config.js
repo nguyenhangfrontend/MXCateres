@@ -15,7 +15,7 @@ export default tseslint.config(
       ecmaVersion: 2020,
       globals: globals.browser,
     },
-    "node": true,
+    // "node": true,
     extends: [
       js.configs.recommended,             // ESLint base
       tseslint.configs.recommended,       // TS rules

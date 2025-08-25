@@ -11,11 +11,13 @@ import Buttons from '@/pages/UiElements/Buttons';
 // import LineChart from '@/pages/Charts/LineChart';
 // import BarChart from '@/pages/Charts/BarChart';
 import UserManagementPage from '@/pages/UserManagement/BasicTables';
-import WaitingTimePage from '@/pages/WaitingTime/waitting-time-page';
+import WaitingTimePage from 'src/src/pages/WaitingTime/WaittingTimePage';
 import Blank from '@/pages/Blank';
 import AppLayout from './layout/AppLayout';
 import { ScrollToTop } from './components/common/ScrollToTop';
 import Home from '@/pages/Dashboard/Home';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 export default function App() {
   return (

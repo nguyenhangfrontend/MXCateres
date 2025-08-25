@@ -11,6 +11,9 @@ interface ButtonProps {
   disabled?: boolean;
   className?: string;
   type?: 'button' | 'submit' | 'reset'; // ✅ restrict correctly
+  height?: number;
+  width?: number;
+  fontSize?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -23,6 +26,9 @@ const Button: React.FC<ButtonProps> = ({
   className = '',
   disabled = false,
   type = 'button', // ✅ sensible default
+  height,
+  width,
+  fontSize,
 }) => {
   const muiSize: MuiButtonProps['size'] = size === 'sm' ? 'small' : 'medium';
   const muiVariant: MuiButtonProps['variant'] = variant === 'primary' ? 'contained' : 'outlined';
@@ -42,7 +48,9 @@ const Button: React.FC<ButtonProps> = ({
         textTransform: 'none',
         px: size === 'sm' ? 2 : 3,
         py: size === 'sm' ? 1.5 : 2,
-        height: 35,
+        height: height || 35,
+        width: width || 35,
+        fontSize: fontSize || '14px',
       }}
     >
       {children}

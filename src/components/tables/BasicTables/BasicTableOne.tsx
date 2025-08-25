@@ -96,8 +96,20 @@ export default function OrdersDataGrid({
     <div className='overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/10 dark:bg-gray-900'>
       <div className='h-[500px] w-full'>
         <DataGrid
+          sx={{
+            '& .MuiDataGrid-cell': {
+              display: 'flex',
+              alignItems: 'center', // vertical
+            },
+            '& .MuiDataGrid-columnHeaders': {
+              display: 'flex',
+              alignItems: 'center', // header vertical align
+            },
+          }}
           rows={tableData}
           columns={columns}
+          autoHeight // grid takes only the height of visible rows (not mandatory)
+          getRowHeight={() => 'auto'}
           {...props}
           disableRowSelectionOnClick
           hideFooterSelectedRowCount
