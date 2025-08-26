@@ -1,11 +1,20 @@
 import { CustomerInfoType } from 'src/src/components/customerInfo/type';
 import { WaitingTimeDataType } from './types';
 import dayjs from 'dayjs';
+import { DEFAULT_PAGE, DEFAULT_ROWS_PER_PAGE } from 'src/src/components/ui/pagination/const';
+
+export const defaultPagination = {
+  total: 0,
+  rowsPerPage: DEFAULT_ROWS_PER_PAGE,
+  page: DEFAULT_PAGE,
+  rowPerPage: 10,
+};
 export const defaultSearchValue = {
   from: dayjs().startOf('day'),
   to: dayjs().endOf('day'),
   workingShift: [],
-  status: [],
+  statuses: [],
+  timeStatuses: [],
 };
 export const workingShift = [
   { key: 1, value: '8:00 - 12:00' },
@@ -13,97 +22,27 @@ export const workingShift = [
   { key: 3, value: '18:00 - 23:00' },
 ];
 export const orderStatus = [
-  { key: 1, value: 'Recieved' },
-  { key: 2, value: 'Watting' },
-  { key: 3, value: 'No order' },
+  { key: 'pending', value: 'Pending' },
+  { key: 'ordered', value: 'Ordered' },
+  { key: 'picking-up', value: 'Picking-up' },
+  { key: 'complete', value: 'Complete ' },
 ];
-export const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
+export const timeStatuses = [
+  { key: 'green', value: 'Fast ' },
+  { key: 'yellow', value: 'Medium' },
+  { key: 'red', value: 'Slow' },
 ];
 export const defaultDataCustomer: CustomerInfoType = {
-  customerId: 'CUST_123456',
-  lastSeenAt: 'Mon Jan 15 2024 03:30:00 GMT+0000',
-  parts: [
-    {
-      type: 'top',
-      imageUrl: 'https://www.lockhatters.com/cdn/shop/files/town-coke_1200x.jpg?v=1744018963',
-    },
-    {
-      type: 'bottom',
-      imageUrl:
-        'https://dynamic.zacdn.com/5FqlqIpBmS7bUtdJyESm37oIZ74=/filters:quality(70):format(webp)/https://static-ph.zacdn.com/p/trendyshop-8979-1765563-2.jpg',
-    },
-    {
-      type: 'top',
-      imageUrl: 'https://www.lockhatters.com/cdn/shop/files/town-coke_1200x.jpg?v=1744018963',
-    },
-    {
-      type: 'bottom',
-      imageUrl:
-        'https://dynamic.zacdn.com/5FqlqIpBmS7bUtdJyESm37oIZ74=/filters:quality(70):format(webp)/https://static-ph.zacdn.com/p/trendyshop-8979-1765563-2.jpg',
-    },
-    {
-      type: 'top',
-      imageUrl: 'https://www.lockhatters.com/cdn/shop/files/town-coke_1200x.jpg?v=1744018963',
-    },
-    {
-      type: 'bottom',
-      imageUrl:
-        'https://dynamic.zacdn.com/5FqlqIpBmS7bUtdJyESm37oIZ74=/filters:quality(70):format(webp)/https://static-ph.zacdn.com/p/trendyshop-8979-1765563-2.jpg',
-    },
-  ],
-  fullbodyUrl:
-    'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
-  zones: [
-    {
-      zone: 'order',
-      duration: 0,
-      start: '2025-08-14T04:15:00.000Z',
-      end: '2025-08-14T04:15:00.000Z',
-    },
-    {
-      zone: 'pickup',
-      start: '2025-08-14T04:15:00.000Z',
-      end: '2025-08-14T04:15:00.000Z',
-      duration: 0,
-    },
-  ],
-  totalDuration: '0 minutes',
-  processingDuration: '0 minutes',
-  status: 'Picking Up',
-  evidents: [
-    {
-      imageUrl:
-        'https://www.thesun.co.uk/wp-content/uploads/2024/01/2014-u-k-services-companies-830630811.jpg?strip=all&w=960',
-      capturedAt: '2025-08-14T04:15:00.000Z',
-      label: 'Pickup Start',
-    },
-    {
-      imageUrl:
-        'https://www.allrecipes.com/thmb/gkOFZOTGMgF0gQOkW7pMq2jDGHY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Starbucks-Cup-Barista-3x2-1-7f08baa3c98347dcabb06358dbe030a1.jpg',
-      capturedAt: '2025-08-14T04:15:00.000Z',
-      label: 'Pickup End',
-    },
-    {
-      imageUrl: 'https://about.starbucks.com/uploads/2021/04/SBX20210405-Greener-Cup-Timeline-Feature.jpg',
-      capturedAt: '2025-08-14T04:15:00.000Z',
-      label: 'Recieved Start',
-    },
-    {
-      imageUrl: 'https://i.insider.com/5f68b70057b7da001ee12c18?width=1000&format=jpeg&auto=webp',
-      capturedAt: '2025-08-14T04:15:00.000Z',
-      label: 'Recived End',
-    },
-  ],
+  customerId: '',
+  lastSeenAt: '',
+  startTime: '',
+  parts: [],
+  fullbodyUrl: '',
+  zones: [],
+  totalDuration: '',
+  processingDuration: '',
+  status: '',
+  evidents: [],
 };
 
 export const tableData: WaitingTimeDataType[] = [
@@ -116,7 +55,8 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: 'Mon Jan 15 2024 10:30:00 GMT+0000 (Coordinated Universal Time)',
     endTime: 'Mon Jan 15 2024 10:35:30 GMT+0000 (Coordinated Universal Time)',
     status: 1,
-    IdentificationPhoto:
+    timeStatus: '1 minutes',
+    customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
@@ -145,7 +85,8 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: '2025-08-22 10:00:00',
     endTime: '2025-08-22 10:12:00',
     status: 2,
-    IdentificationPhoto:
+    timeStatus: '1 minutes',
+    customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
@@ -174,7 +115,8 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: 'Wed Jan 17 2024 09:45:00 GMT+0000 (Coordinated Universal Time)',
     endTime: 'Wed Jan 17 2024 09:52:10 GMT+0000 (Coordinated Universal Time)',
     status: 3,
-    IdentificationPhoto:
+    timeStatus: '1 minutes',
+    customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
@@ -203,7 +145,8 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: 'Thu Jan 18 2024 14:20:00 GMT+0000 (Coordinated Universal Time)',
     endTime: 'Thu Jan 18 2024 14:25:40 GMT+0000 (Coordinated Universal Time)',
     status: 3,
-    IdentificationPhoto:
+    timeStatus: '1 minutes',
+    customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
@@ -232,7 +175,8 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: '2025-08-22 10:00:00',
     endTime: '2025-08-22 10:25:00',
     status: 2,
-    IdentificationPhoto:
+    timeStatus: '1 minutes',
+    customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
@@ -261,7 +205,8 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: 'Sat Jan 20 2024 08:40:00 GMT+0000 (Coordinated Universal Time)',
     endTime: 'Sat Jan 20 2024 08:45:55 GMT+0000 (Coordinated Universal Time)',
     status: 1,
-    IdentificationPhoto:
+    timeStatus: '1 minutes',
+    customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
@@ -290,7 +235,8 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: '2025-08-22 10:00:00',
     endTime: '2025-08-22 10:25:00',
     status: 2,
-    IdentificationPhoto:
+    timeStatus: '1 minutes',
+    customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
@@ -319,7 +265,8 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: 'Mon Jan 22 2024 10:10:00 GMT+0000 (Coordinated Universal Time)',
     endTime: 'Mon Jan 22 2024 10:15:35 GMT+0000 (Coordinated Universal Time)',
     status: 3,
-    IdentificationPhoto:
+    timeStatus: '1 minutes',
+    customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
@@ -348,7 +295,8 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: '2025-08-22 10:00:00',
     endTime: '2025-08-22 10:25:00',
     status: 1,
-    IdentificationPhoto:
+    timeStatus: '1 minutes',
+    customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
@@ -377,7 +325,8 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: '2025-08-22 10:00:00',
     endTime: '2025-08-22 10:12:00',
     status: 1,
-    IdentificationPhoto:
+    timeStatus: '1 minutes',
+    customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:
@@ -406,7 +355,8 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: '2025-08-22 10:00:00',
     endTime: '2025-08-22 10:12:00',
     status: 1,
-    IdentificationPhoto:
+    timeStatus: '1 minutes',
+    customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
     evidenceThumbnail: {
       imageUrl:

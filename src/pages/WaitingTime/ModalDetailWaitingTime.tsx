@@ -12,12 +12,15 @@ import { defaultDataCustomer } from './constant';
 interface ModalDetailWaitingTimeProps {
   isOpen: boolean;
   onClose: () => void;
-  data: WaitingTimeDataType | undefined;
+  data: any;
 }
 
 const ModalDetailWaitingTime: React.FC<ModalDetailWaitingTimeProps> = ({ isOpen, onClose, data }) => {
   const [dataCustomer, setDataCustomer] = useState<CustomerInfoType>(defaultDataCustomer);
-  useEffect(() => {}, [data?.customerId]);
+
+  // useEffect(() => {
+  //   setDataCustomer(data)
+  // }, [data?.customerId]);
 
   return (
     <Modal
@@ -29,7 +32,7 @@ const ModalDetailWaitingTime: React.FC<ModalDetailWaitingTimeProps> = ({ isOpen,
       className='bg-white dark:bg-gray-900 width-[1200px]'
     >
       <div className='mb-[15px]'>
-        <CustomerInfoComponent dataCustomer={dataCustomer} />
+        <CustomerInfoComponent dataCustomer={data} />
       </div>
       <Button onClick={onClose} variant='outlined' color='primary' sx={{ mt: 2 }}>
         Close

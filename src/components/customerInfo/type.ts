@@ -15,6 +15,7 @@ export type CustomerInfoType = {
   evidents: CustomerEnvidencesType[];
   lastSeenAt: string;
   parts: PartsBodyType[];
+  startTime: string;
 };
 
 export type PartsBodyType = {
@@ -34,4 +35,11 @@ export type PartUserInfoType = {
   color: string;
   imageUrl: string;
 };
-export type WaitingTimeDetailType = {};
+export type WaitingTimeDetailResponse = {
+  data: CustomerInfoType;
+  status: string;
+};
+export type CustomerDetailResponse = {
+  dataCustomerDetail: CustomerInfoType;
+  status: string;
+};

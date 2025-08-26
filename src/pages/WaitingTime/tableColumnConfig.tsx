@@ -38,24 +38,29 @@ export function useColumns({ detailWaitingTime }: ColumnType) {
         renderCell: (params) => <span className='text-sm text-gray-700 dark:text-gray-300'>{params.value}</span>,
       },
       {
-        field: 'IdentificationPhoto',
-        headerName: 'Identification photo',
+        field: 'customerProfileUrl',
+        headerName: 'Customer Profile',
         flex: 0.7,
-        renderCell: (params) => <img height={50} width={100} style={{ maxWidth: '100%' }} src={params.value} />,
+        renderCell: (params) => {
+          console.log('params', params.value);
+          return <img height={50} width={100} style={{ maxWidth: '100%' }} src={params.value} />;
+        },
       },
-      {
-        field: 'cameraId',
-        headerName: 'Camera ID',
-        flex: 1,
-        renderCell: (params) => <span className='text-sm text-gray-700 dark:text-gray-300'>{params.value}</span>,
-      },
+      // {
+      //   field: 'cameraId',
+      //   headerName: 'Camera ID',
+      //   flex: 1,
+      //   renderCell: (params) => <span className='text-sm text-gray-700 dark:text-gray-300'>{params.value}</span>,
+      // },
 
       {
         field: 'startTime',
         headerName: 'Start Time',
         flex: 0.7,
         renderCell: (params) => (
-          <span className='text-sm text-gray-700 dark:text-gray-300'>{moment(params.value).format('HH:mm:ss')}</span>
+          <span className='text-sm text-gray-700 dark:text-gray-300'>
+            {params.value ? moment(params.value).format('HH:mm:ss') : ''}
+          </span>
         ),
       },
       {
@@ -71,36 +76,27 @@ export function useColumns({ detailWaitingTime }: ColumnType) {
         headerName: 'Waitting Time',
         flex: 0.7,
         renderCell: (params) => {
-          const start = moment(params?.row?.startTime);
-          const end = moment(params?.row?.endTime);
+          const ms = params.value && params.row?.timeStatus;
 
-          const ms = end.diff(start);
-
-          const colorStatus =
-            ms <= moment.duration(10, 'minutes').asMilliseconds()
-              ? 'success'
-              : ms > moment.duration(10, 'minutes').asMilliseconds() &&
-                  ms <= moment.duration(20, 'minutes').asMilliseconds()
-                ? 'warning'
-                : 'error';
+          const colorStatus = ms === 'green' ? 'success' : ms === 'yellow' ? 'warning' : 'error';
           if (ms) {
             return (
               <span className='text-sm text-gray-700 dark:text-gray-300'>
                 {' '}
-                <CustomChip label={moment.utc(ms).format('mm:ss')} color={colorStatus} variant='outlined' />
+                <CustomChip label='' color={colorStatus} variant='outlined' />
               </span>
             );
           }
         },
       },
       {
-        field: 'status',
-        headerName: 'Order Status',
+        field: 'timeStatus',
+        headerName: 'Time Order Status',
         flex: 0.7,
         minWidth: 150,
         renderCell: (params) => {
-          const severity = params.value === 1 ? 'success' : params.value === 2 ? 'warning' : 'error';
-          const content = params.value === 1 ? 'Recieved' : params.value === 2 ? 'Watting' : 'No order';
+          const severity = params.value === 'green' ? 'success' : params.value === 'yellow' ? 'warning' : 'error';
+          const content = params.value === 'green' ? 'Recieved' : params.value === 'yellow' ? 'Waitting' : 'Pending';
 
           return (
             <Alert sx={{ width: '100%' }} severity={severity}>

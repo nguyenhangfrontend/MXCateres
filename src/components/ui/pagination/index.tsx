@@ -13,7 +13,7 @@ type PaginationFixedProps = {
   onSearch: boolean;
   pagination: PaginationType;
   pageNumber?: number;
-  handlePageChange?: (e: ChangeEvent<unknown>, page: number, pageSize: number) => void;
+  handlePageChange: (e: ChangeEvent<unknown>, page: number, pageSize: number) => void;
 };
 
 type DropDownProps = {
@@ -132,6 +132,7 @@ const DropDown = ({
 };
 
 function PaginationFixed({ onSearch, pagination, pageNumber, handlePageChange }: PaginationFixedProps) {
+  console.log('pagination', pagination.rowsPerPage);
   return (
     <>
       {onSearch && (
@@ -140,15 +141,15 @@ function PaginationFixed({ onSearch, pagination, pageNumber, handlePageChange }:
           data-testid='pagination-bar'
         >
           <div className='text-lg font-bold flex justify-between items-center'>
-            <div>Total record: {pagination.total}</div>
+            <div>Total record: {pagination?.total}</div>
             <div className='flex flex-row items-center justify-center'>
               <DropDown
                 id='select_rowsPerPage'
                 className='w-20'
                 menu={ROWS_PER_PAGE_OPTIONS}
                 styleSelect={{ margin: '0' }}
-                value={pagination.rowsPerPage}
-                setValue={(pageSize) => handlePageChange?.(undefined as any, pageNumber ?? DEFAULT_PAGE, pageSize)}
+                value={pagination?.rowsPerPage}
+                setValue={(pageSize) => handlePageChange(undefined as any, pageNumber ?? DEFAULT_PAGE, pageSize)}
               />
               <Pagination
                 data-testid='paging-bar'

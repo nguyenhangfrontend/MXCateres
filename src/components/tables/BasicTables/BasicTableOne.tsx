@@ -56,6 +56,7 @@ type DataGridTableProps = Omit<DataGridProps, 'columns' | 'pagination' | 'rowSel
   freezeToColumnField?: string;
   getRowHeight?: (params: GridRowHeightParams) => GridRowHeightReturnValue;
   noDataMessage?: string;
+  pagination?: boolean;
 };
 
 export default function OrdersDataGrid({
@@ -90,6 +91,7 @@ export default function OrdersDataGrid({
   freezeToColumnField,
   getRowHeight = () => (autoHeight ? 'auto' : null),
   noDataMessage,
+  pagination,
   ...props
 }: DataGridTableProps) {
   return (
@@ -105,14 +107,20 @@ export default function OrdersDataGrid({
               display: 'flex',
               alignItems: 'center', // header vertical align
             },
+
+            '& .MuiDataGrid-footerContainer .MuiTablePagination-root': {
+              display: 'none',
+            },
           }}
           rows={tableData}
           columns={columns}
-          autoHeight // grid takes only the height of visible rows (not mandatory)
-          getRowHeight={() => 'auto'}
+          rowHeight={200}
+          // autoHeight // grid takes only the height of visible rows (not mandatory)
+
           {...props}
           disableRowSelectionOnClick
           hideFooterSelectedRowCount
+          {...(pagination ? { pagination: true } : {})}
           className='[&_.MuiDataGrid-columnHeaders]:!bg-gray-50 [&_.MuiDataGrid-columnHeaders]:dark:!bg-gray-800'
         />
       </div>

@@ -5,25 +5,36 @@ import PaginationFixed from '@/components/ui/pagination';
 import { useEffect, useState } from 'react';
 import { DEFAULT_PAGE, DEFAULT_ROWS_PER_PAGE } from '@/components/ui/pagination/const';
 import { useColumns } from './tableColumnConfig';
-import { defaultSearchValue, tableData } from './constant';
-import { useLazyGetWaitingTimeListQuery } from 'src/src/api-request/Watting-time.api';
+import { defaultPagination, defaultSearchValue, tableData } from './constant';
+import { useLazyGetWaitingTimeListQuery } from '@/api-request/Watting-time.api';
 import ModalDetailWaitingTime from './ModalDetailWaitingTime';
-import { SearchFormPropsType, SearchFormType, WaitingTimeDataType } from './types';
+import { SearchFormType, WaitingTimeDataType } from './types';
 import SearchForm from './SearchForm';
-import moment from 'moment';
 import dayjs from 'dayjs';
 
 export default function UserManagementPage() {
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const [pagination, setPagination] = useState({
-    total: 0,
-    rowsPerPage: DEFAULT_ROWS_PER_PAGE,
-    pageNumber: DEFAULT_PAGE,
-  });
   const [onSearch, setOnSearch] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [waitingTimeDetailData, setWaitingTimeData] = useState<WaitingTimeDataType>();
-  const [getWaittingTimeList, data] = useLazyGetWaitingTimeListQuery();
+  const [getWaittingTimeList, { data }] = useLazyGetWaitingTimeListQuery();
+  const [searchedForm, setSeachedForm] = useState<SearchFormType>(defaultSearchValue);
+  const imageUrl = import.meta.env.VITE_IMAGE_URL;
+  const dataTable = (data?.data || []).map((item, index) => {
+    return {
+      ...item,
+      id: index + 1,
+      customerProfileUrl: `${imageUrl}${item.customerProfileUrl}`,
+    };
+  });
+
+  console.log('dataTable', dataTable);
+
+  const dataPagination = {
+    ...defaultPagination,
+    ...data?.pagination,
+  };
+  console.log('dataPagination', dataPagination);
   useEffect(() => {
     getWaittingTimeList({
       ...defaultSearchValue,
@@ -31,15 +42,27 @@ export default function UserManagementPage() {
       to: dayjs(defaultSearchValue.to).format('YYYY-MM-DD'),
     });
   }, []);
-  const handlePageChange = () => {};
+  const handlePageChange = () => {
+    const parrams = {
+      ...searchedForm,
+      from: dayjs(searchedForm.from).format('YYYY-MM-DD'),
+      to: dayjs(searchedForm.to).format('YYYY-MM-DD'),
+    };
+    getWaittingTimeList(parrams);
+  };
   const detailWaitingTime = (data: WaitingTimeDataType) => {
+    console.log('detailWaitingTime', data);
     setWaitingTimeData(data);
     setIsModalOpen(true);
   };
+
+  console.log('waitingTimeDetailData', waitingTimeDetailData);
   const handleCloseModal = () => setIsModalOpen(false);
   const { columns } = useColumns({ detailWaitingTime });
 
   const handleSearch = (formValues: SearchFormType) => {
+    setOnSearch(true);
+    setSeachedForm(formValues);
     const parrams = {
       ...formValues,
       from: dayjs(formValues.from).format('YYYY-MM-DD'),
@@ -62,19 +85,19 @@ export default function UserManagementPage() {
           <SearchForm handleSearch={handleSearch} />
         </ComponentCard>
         <ComponentCard title='Waiting Time List'>
-          <BasicTableOne tableData={tableData} column={{ columns }} />
+          <BasicTableOne pagination={false} tableData={dataTable || []} column={{ columns }} />
+
+          <ModalDetailWaitingTime data={waitingTimeDetailData} isOpen={isModalOpen} onClose={handleCloseModal} />
+        </ComponentCard>
+        {onSearch && dataTable.length && (
           <PaginationFixed
             onSearch={onSearch}
-            pagination={pagination}
+            pagination={dataPagination}
             pageNumber={pageNumber}
             handlePageChange={handlePageChange}
           />
-          <ModalDetailWaitingTime data={waitingTimeDetailData} isOpen={isModalOpen} onClose={handleCloseModal} />
-        </ComponentCard>
+        )}
       </div>
     </>
   );
-}
-function setIsModalOpen(arg0: boolean) {
-  throw new Error('Function not implemented.');
 }

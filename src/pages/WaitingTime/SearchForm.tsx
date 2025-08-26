@@ -9,14 +9,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useLoginMutation } from '@/api-request/Auth.api';
 import { SearchFormPropsType, SearchFormType } from './types';
-import { Theme, useTheme } from '@mui/material/styles';
+
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { defaultSearchValue, names, orderStatus, workingShift } from './constant';
-import moment from 'moment';
+import Select from '@mui/material/Select';
+import { defaultSearchValue, orderStatus, timeStatuses, workingShift } from './constant';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -33,9 +32,7 @@ export default function SearchForm({ handleSearch }: SearchFormPropsType) {
   const [login] = useLoginMutation();
 
   const {
-    register,
     handleSubmit,
-    watch,
     control,
     formState: { errors },
   } = useForm<SearchFormType>({
@@ -81,7 +78,7 @@ export default function SearchForm({ handleSearch }: SearchFormPropsType) {
             control={control}
             render={({ field }) => <DatePicker label='To' value={field.value || null} onChange={field.onChange} />}
           />
-          <Controller
+          {/* <Controller
             name='workingShift'
             control={control}
             defaultValue={[]}
@@ -108,9 +105,9 @@ export default function SearchForm({ handleSearch }: SearchFormPropsType) {
                 </FormControl>
               );
             }}
-          />
+          /> */}
           <Controller
-            name='status'
+            name='statuses'
             control={control}
             defaultValue={[]}
             render={({ field }) => {
@@ -128,6 +125,34 @@ export default function SearchForm({ handleSearch }: SearchFormPropsType) {
                     MenuProps={MenuProps}
                   >
                     {orderStatus.map((status) => (
+                      <MenuItem key={status.key} value={status.key}>
+                        {status.value}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              );
+            }}
+          />
+          <Controller
+            name='timeStatuses'
+            control={control}
+            defaultValue={[]}
+            render={({ field }) => {
+              console.log('field', field);
+              return (
+                <FormControl sx={{ minWidth: 200 }}>
+                  <InputLabel id='zoneId-label'>Time Order Status</InputLabel>
+                  <Select
+                    labelId='status-label'
+                    id='status'
+                    multiple
+                    onChange={field.onChange}
+                    value={field.value}
+                    input={<OutlinedInput label='Status' />} // 👈 label passed here
+                    MenuProps={MenuProps}
+                  >
+                    {timeStatuses.map((status) => (
                       <MenuItem key={status.key} value={status.key}>
                         {status.value}
                       </MenuItem>

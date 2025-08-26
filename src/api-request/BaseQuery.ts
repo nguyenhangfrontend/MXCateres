@@ -15,7 +15,7 @@ const mutex = new Mutex();
 const rawBaseQuery = retry(
   fetchBaseQuery({
     baseUrl: apiUrl,
-    credentials: 'same-origin',
+    // credentials: 'same-origin',
     prepareHeaders: (headers, { getState }) => {
       const token = getCookieLocal('token');
       console.log('token', token);
