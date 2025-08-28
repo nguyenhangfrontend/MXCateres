@@ -3,40 +3,44 @@ import ComponentCard from '@/components/common/ComponentCard';
 import BasicTableOne from '@/components/tables/BasicTables/BasicTableOne';
 import PaginationFixed from '@/components/ui/pagination';
 import { useEffect, useState } from 'react';
-import { DEFAULT_PAGE, DEFAULT_ROWS_PER_PAGE } from '@/components/ui/pagination/const';
 import { useColumns } from './tableColumnConfig';
-import { defaultPagination, defaultSearchValue, tableData } from './constant';
-import { useLazyGetWaitingTimeListQuery } from 'src/src/api-request/WattingTime.api';
-import ModalDetailWaitingTime from './ModalDetailWaitingTime';
-import { SearchFormType, WaitingTimeDataType } from './types';
+import { defaultPagination, defaultSearchValue } from './constant';
+import ModalDetailCustomer from './ModalDetailCustomer';
+import { SearchFormType, UserType } from './types';
 import SearchForm from './SearchForm';
 import dayjs from 'dayjs';
+import { useLazyGetUserListQuery } from 'src/src/api-request/Users.api';
 
 export default function UserManagementPage() {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [onSearch, setOnSearch] = useState<boolean>(false);
+  const [userData, setDataCustomer] = useState<UserType>({
+    lastSeenAt: '',
+    customerId: '',
+    evidenceThumbnail: '',
+    id: 0,
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [waitingTimeDetailData, setWaitingTimeData] = useState<WaitingTimeDataType>();
-  const [getWaittingTimeList, { data }] = useLazyGetWaitingTimeListQuery();
+  const [getUserList, { data }] = useLazyGetUserListQuery();
   const [searchedForm, setSeachedForm] = useState<SearchFormType>(defaultSearchValue);
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
-  const dataTable = (data?.data || []).map((item, index) => {
+
+  console.log('data', data);
+  console.log('data?.pagination', data?.pagination);
+  const dataTable = (data?.records || []).map((item, index) => {
     return {
       ...item,
-      id: index + 1,
-      customerProfileUrl: `${imageUrl}${item.customerProfileUrl}`,
+      evidenceThumbnail: `${imageUrl}${item.evidenceThumbnail}`,
     };
   });
 
-  // console.log('dataTable', dataTable);
-
   const dataPagination = {
     ...defaultPagination,
-    ...data?.pagination,
+    pagination: data?.pagination,
   };
   console.log('dataPagination', dataPagination);
   useEffect(() => {
-    getWaittingTimeList({
+    getUserList({
       ...defaultSearchValue,
       from: dayjs(defaultSearchValue.from).format('YYYY-MM-DD'),
       to: dayjs(defaultSearchValue.to).format('YYYY-MM-DD'),
@@ -48,16 +52,16 @@ export default function UserManagementPage() {
       from: dayjs(searchedForm.from).format('YYYY-MM-DD'),
       to: dayjs(searchedForm.to).format('YYYY-MM-DD'),
     };
-    getWaittingTimeList(parrams);
+    getUserList(parrams);
   };
-  const detailWaitingTime = (data: WaitingTimeDataType) => {
-    setWaitingTimeData(data);
+  const detailCustomer = (data: UserType) => {
+    console.log('detailCustomer', data);
+    setDataCustomer(data);
     setIsModalOpen(true);
   };
 
-  // console.log('waitingTimeDetailData', waitingTimeDetailData);
   const handleCloseModal = () => setIsModalOpen(false);
-  const { columns } = useColumns({ detailWaitingTime });
+  const { columns } = useColumns({ detailCustomer });
 
   const handleSearch = (formValues: SearchFormType) => {
     setOnSearch(true);
@@ -69,7 +73,7 @@ export default function UserManagementPage() {
     };
     console.log('parrams', parrams);
 
-    getWaittingTimeList(parrams);
+    getUserList(parrams);
   };
 
   return (
@@ -85,16 +89,17 @@ export default function UserManagementPage() {
         </ComponentCard>
         <ComponentCard title='Waiting Time List'>
           <BasicTableOne pagination={false} tableData={dataTable || []} column={{ columns }} />
-          {dataTable.length && (
-            <PaginationFixed
-              onSearch={onSearch}
-              pagination={dataPagination}
-              pageNumber={pageNumber}
-              handlePageChange={handlePageChange}
-            />
-          )}
-          <ModalDetailWaitingTime data={waitingTimeDetailData} isOpen={isModalOpen} onClose={handleCloseModal} />
+
+          <ModalDetailCustomer data={userData} isOpen={isModalOpen} onClose={handleCloseModal} />
         </ComponentCard>
+        {dataTable.length && (
+          <PaginationFixed
+            onSearch={onSearch}
+            pagination={dataPagination}
+            // pageNumber={pageNumber}
+            handlePageChange={handlePageChange}
+          />
+        )}
       </div>
     </>
   );

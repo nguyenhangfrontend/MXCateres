@@ -36,7 +36,7 @@ export const Modal: React.FC<ModalProps> = ({
           width: width || '600px', // Default width
           maxWidth: '90vw',
           height: height || 'auto',
-          maxHeight: '99vh',
+          maxHeight: height,
           margin: 0,
         },
       }}

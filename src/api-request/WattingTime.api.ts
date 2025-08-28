@@ -6,7 +6,7 @@ import {
   WaitingTimeDetailTypeParams,
   WaitingTimeResponse,
 } from '@/pages/WaitingTime/types';
-import { CustomerDetailResponse, WaitingTimeDetailResponse } from '@/components/customerInfo/type';
+import { CustomerDetailResponse, WaitingTimeDetailResponse } from 'src/src/pages/WaitingTime/customerInfo/type';
 
 export const WaitingTimeApi = createApi({
   reducerPath: 'WaitingTimeApi',

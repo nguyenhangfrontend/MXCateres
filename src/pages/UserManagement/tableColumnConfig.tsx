@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { GridColDef } from '@mui/x-data-grid';
-import { ColumnType, WaitingTimeDataType } from './types';
+import { ColumnType, UserType } from './types';
 import moment from 'moment';
 import Button from '@/components/ui/button/Button';
 import Chip from '@mui/material/Chip';
@@ -20,8 +20,8 @@ const CustomChip = styled(Chip)(() => ({
   },
 }));
 
-export function useColumns({ detailWaitingTime }: ColumnType) {
-  const columns: GridColDef<WaitingTimeDataType>[] = useMemo(
+export function useColumns({ detailCustomer }: ColumnType) {
+  const columns: GridColDef<UserType>[] = useMemo(
     () => [
       // {
       //   field: 'waitingTimeId',
@@ -38,7 +38,7 @@ export function useColumns({ detailWaitingTime }: ColumnType) {
         renderCell: (params) => <span className='text-sm text-gray-700 dark:text-gray-300'>{params.value}</span>,
       },
       {
-        field: 'customerProfileUrl',
+        field: 'evidenceThumbnail',
         headerName: 'Customer Profile',
         flex: 0.7,
         renderCell: (params) => {
@@ -58,8 +58,8 @@ export function useColumns({ detailWaitingTime }: ColumnType) {
       // },
 
       {
-        field: 'startTime',
-        headerName: 'Start Time',
+        field: 'lastSeenAt',
+        headerName: 'Last Seen At',
         flex: 0.7,
         renderCell: (params) => (
           <span className='text-sm text-gray-700 dark:text-gray-300'>
@@ -67,57 +67,13 @@ export function useColumns({ detailWaitingTime }: ColumnType) {
           </span>
         ),
       },
-      {
-        field: 'endTime',
-        headerName: 'End Time',
-        flex: 0.7,
-        renderCell: (params) => (
-          <span className='text-sm text-gray-700 dark:text-gray-300'>
-            {moment(params.value).format('DD/MM/YYYY HH:mm:ss')}
-          </span>
-        ),
-      },
-      {
-        field: 'waitingTime',
-        headerName: 'Waitting Time',
-        flex: 0.7,
-        renderCell: (params) => {
-          const ms = params.value && params.row?.timeStatus;
-
-          const colorStatus = ms === 'green' ? 'success' : ms === 'yellow' ? 'warning' : 'error';
-          if (ms) {
-            return (
-              <span className='text-sm text-gray-700 dark:text-gray-300'>
-                {' '}
-                <CustomChip label={params.value} color={colorStatus} variant='outlined' />
-              </span>
-            );
-          }
-        },
-      },
-      {
-        field: 'timeStatus',
-        headerName: 'Time Order Status',
-        flex: 0.7,
-        minWidth: 150,
-        renderCell: (params) => {
-          const severity = params.value === 'green' ? 'success' : params.value === 'yellow' ? 'warning' : 'error';
-          const content = params.value === 'green' ? 'Recieved' : params.value === 'yellow' ? 'Waitting' : 'Pending';
-
-          return (
-            <Alert sx={{ width: '100%' }} severity={severity}>
-              {content}
-            </Alert>
-          );
-        },
-      },
 
       {
         field: 'action',
         headerName: 'Action',
         flex: 0.7,
         renderCell: (params) => (
-          <Button size='sm' onClick={() => detailWaitingTime(params.row)}>
+          <Button size='sm' onClick={() => detailCustomer(params.row)}>
             Detail
           </Button>
         ),

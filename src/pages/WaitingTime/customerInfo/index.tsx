@@ -5,8 +5,8 @@ import { Card, CardContent, Typography, Dialog, DialogContent } from '@mui/mater
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
-import { useLazyGetCustomerDetailQuery, useLazyGetWaitingTimeDetailQuery } from 'src/src/api-request/Watting-time.api';
 import { defaultDataCustomer } from 'src/src/pages/WaitingTime/constant';
+import { useLazyGetCustomerDetailQuery, useLazyGetWaitingTimeDetailQuery } from 'src/src/api-request/WattingTime.api';
 
 type CustomerProps = {
   dataCustomer?: CustomerInfoType | undefined;
@@ -69,16 +69,19 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
   };
 
   const settingsPartSlider = { ...settings };
-
+  console.log('dataCustomer?.zones', dataCustomer?.zones);
   return (
     <div className='p-4 grid grid-cols-1 gap-4'>
       {/* Top Section */}
       <div className='grid grid-cols-3 gap-4'>
         {/* Avatar */}
-        <ComponentCard className='flex items-center justify-center'>
-          <div className=''>
-            <img height={300} style={{ maxHeight: '300px' }} src={`${imageUrl}${dataCustomerFull?.fullbodyUrl}`} />
-          </div>
+        <ComponentCard className='grid grid-cols-1'>
+          <img
+            height={300}
+            className='max-h-[501px] object-contain w-full self-start'
+            style={{ height: '500px' }}
+            src={`${imageUrl}${dataCustomerFull?.fullbodyUrl}`}
+          />
         </ComponentCard>
 
         {/* Customer Info */}
@@ -102,32 +105,32 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
 
           {/* Zone Info */}
           <div className='customer-wrapper grid grid-cols-2 gap-4'>
-            {dataCustomer?.zones?.map((item: ZoneDetailCustomer) => (
+            {(dataCustomerFull?.zones || []).map((item: ZoneDetailCustomer) => (
               <ComponentCard key={item.zone} title={item.zone}>
                 <div className='item-customer flex justify-between items-center'>
                   <span>{`Start ${item.zone}:`}</span>
-                  <span>{moment.utc(item.start).format('HH:mm')}</span>
+                  <span>{item.start ? moment.utc(item.start).format('HH:mm') : ''}</span>
                 </div>
                 <div className='item-customer flex justify-between items-center'>
                   <span>{`Finished ${item.zone}:`}</span>
-                  <span>{moment.utc(item?.end).format('HH:mm')}</span>
+                  <span>{item?.end ? moment.utc(item?.end).format('HH:mm') : ''}</span>
+                </div>
+                <div className='item-customer flex justify-between items-center'>
+                  <span>{`Duration:`}</span>
+                  <span>{item?.duration}</span>
                 </div>
               </ComponentCard>
             ))}
           </div>
+          {/* Staff Analysis */}
+          <ComponentCard title='Waiter/waitress analysis'>
+            <ul className='list-disc pl-6'>
+              <li>waiter/waitress A Server: 6 minutes</li>
+              <li>Compare to Average in a shift: 4 minuts</li>
+            </ul>
+          </ComponentCard>
         </ComponentCard>
       </div>
-
-      {/* Staff Analysis */}
-      <Card>
-        <CardContent>
-          <Typography variant='subtitle1'>Phân tích nhân viên:</Typography>
-          <ul className='list-disc pl-6'>
-            <li>Nhân viên A phục vụ: 6 phút</li>
-            <li>So sánh trung bình ca: 4 phút</li>
-          </ul>
-        </CardContent>
-      </Card>
 
       {/* Parts Evidence */}
       <ComponentCard title='Parts body Envidences'>

@@ -135,60 +135,60 @@ function PaginationFixed({ onSearch, pagination, pageNumber, handlePageChange }:
   console.log('pagination', pagination.rowsPerPage);
   return (
     <>
-      {onSearch && (
-        <div
-          className='fixed left-0 bottom-[20px] bg-[#c9c9c9] opacity-60 w-screen px-4 py-1 text-black'
-          data-testid='pagination-bar'
-        >
-          <div className='text-lg font-bold flex justify-between items-center'>
-            <div>Total record: {pagination?.total}</div>
-            <div className='flex flex-row items-center justify-center'>
-              <DropDown
-                id='select_rowsPerPage'
-                className='w-20'
-                menu={ROWS_PER_PAGE_OPTIONS}
-                styleSelect={{ margin: '0' }}
-                value={pagination?.rowsPerPage}
-                setValue={(pageSize) => handlePageChange(undefined as any, pageNumber ?? DEFAULT_PAGE, pageSize)}
-              />
-              <Pagination
-                data-testid='paging-bar'
-                className='flex '
-                size='medium'
-                count={isEmpty(pagination) ? 1 : Math.ceil((pagination?.total || 0) / (pagination?.rowsPerPage || 0))}
-                page={pageNumber}
-                onChange={(e, page) => handlePageChange?.(e, page, pagination.rowsPerPage)}
-                showFirstButton
-                showLastButton
-                renderItem={(item) => (
-                  <PaginationItem
-                    role='button'
-                    {...item}
-                    sx={{
-                      color: item.type === 'page' && item.page === pageNumber ? 'red' : 'black',
-                      fontWeight: item.type === 'page' && item.page === pageNumber ? 'bold' : 'normal',
-                      fontSize: '13px',
-                      backgroundColor: item.type === 'page' && item.page === pageNumber ? 'transparent' : 'inherit',
-                      '&:hover': {
-                        backgroundColor: 'inherit',
-                      },
-                      '&.Mui-selected': {
-                        backgroundColor: 'transparent !important',
-                        outline: 'none',
-                        boxShadow: 'none',
-                      },
-                      '&:focus': {
-                        outline: 'none',
-                        boxShadow: 'none',
-                      },
-                    }}
-                  />
-                )}
-              />
-            </div>
+      {/* {onSearch && ( */}
+      <div
+        className='fixed left-0 bottom-[0px] bg-[#ebf3fc]  w-screen px-4 py-1 text-black'
+        data-testid='pagination-bar'
+      >
+        <div className='text-lg font-bold flex justify-between items-center'>
+          <div>Total record: {pagination?.total}</div>
+          <div className='flex flex-row items-center justify-center'>
+            <DropDown
+              id='select_rowsPerPage'
+              className='w-20'
+              menu={ROWS_PER_PAGE_OPTIONS}
+              styleSelect={{ margin: '0' }}
+              value={pagination?.rowsPerPage}
+              setValue={(pageSize) => handlePageChange(undefined as any, pageNumber ?? DEFAULT_PAGE, pageSize)}
+            />
+            <Pagination
+              data-testid='paging-bar'
+              className='flex '
+              size='medium'
+              count={isEmpty(pagination) ? 1 : Math.ceil((pagination?.total || 0) / (pagination?.rowsPerPage || 0))}
+              page={pageNumber}
+              onChange={(e, page) => handlePageChange?.(e, page, pagination.rowsPerPage)}
+              showFirstButton
+              showLastButton
+              renderItem={(item) => (
+                <PaginationItem
+                  role='button'
+                  {...item}
+                  sx={{
+                    color: item.type === 'page' && item.page === pageNumber ? 'red' : 'black',
+                    fontWeight: item.type === 'page' && item.page === pageNumber ? 'bold' : 'normal',
+                    fontSize: '13px',
+                    backgroundColor: item.type === 'page' && item.page === pageNumber ? 'transparent' : 'inherit',
+                    '&:hover': {
+                      backgroundColor: 'inherit',
+                    },
+                    '&.Mui-selected': {
+                      backgroundColor: 'transparent !important',
+                      outline: 'none',
+                      boxShadow: 'none',
+                    },
+                    '&:focus': {
+                      outline: 'none',
+                      boxShadow: 'none',
+                    },
+                  }}
+                />
+              )}
+            />
           </div>
         </div>
-      )}
+      </div>
+      {/* )} */}
     </>
   );
 }

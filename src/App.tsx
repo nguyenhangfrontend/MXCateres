@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router';
+import { lazy } from 'react';
 import SignIn from '@/pages/AuthPages/SignIn';
 import SignUp from '@/pages/AuthPages/SignUp';
 import NotFound from '@/pages/OtherPage/NotFound';
@@ -10,12 +11,12 @@ import Avatars from '@/pages/UiElements/Avatars';
 import Buttons from '@/pages/UiElements/Buttons';
 // import LineChart from '@/pages/Charts/LineChart';
 // import BarChart from '@/pages/Charts/BarChart';
-import UserManagementPage from '@/pages/UserManagement/BasicTables';
-import WaitingTimePage from 'src/src/pages/WaitingTime/WaittingTimePage';
-import Blank from '@/pages/Blank';
+const UserManagementPage = lazy(() => import('@/pages/UserManagement/UserManagementPage'));
+const WaitingTimePage = lazy(() => import('@/pages/WaitingTime/WaittingTimePage'));
+const Blank = lazy(() => import('@/pages/Blank'));
 import AppLayout from './layout/AppLayout';
 import { ScrollToTop } from './components/common/ScrollToTop';
-import Home from '@/pages/Dashboard/Home';
+const Home = lazy(() => import('@/pages/Dashboard/Home'));
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 

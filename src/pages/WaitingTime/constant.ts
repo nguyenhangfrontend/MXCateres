@@ -1,4 +1,4 @@
-import { CustomerInfoType } from 'src/src/components/customerInfo/type';
+import { CustomerInfoType } from 'src/src/pages/WaitingTime/customerInfo/type';
 import { WaitingTimeDataType } from './types';
 import dayjs from 'dayjs';
 import { DEFAULT_PAGE, DEFAULT_ROWS_PER_PAGE } from 'src/src/components/ui/pagination/const';
