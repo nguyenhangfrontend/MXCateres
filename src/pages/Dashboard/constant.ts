@@ -64,10 +64,6 @@ export const mockEcommerceData = {
     { period: '2025-09-05', value: 50 },
     { period: '2025-09-06', value: 32 },
     { period: '2025-09-07', value: 29 },
-    { period: '2025-09-08', value: 21 },
-    { period: '2025-09-09', value: 17 },
-    { period: '2025-09-10', value: 15 },
-    { period: '2025-09-11', value: 12 },
   ],
   waitingTimeChart: [
     { period: '2025-08-28', value: 24 },
@@ -81,9 +77,5 @@ export const mockEcommerceData = {
     { period: '2025-09-05', value: 50 },
     { period: '2025-09-06', value: 32 },
     { period: '2025-09-07', value: 29 },
-    { period: '2025-09-08', value: 21 },
-    { period: '2025-09-09', value: 17 },
-    { period: '2025-09-10', value: 15 },
-    { period: '2025-09-11', value: 12 },
   ],
 };

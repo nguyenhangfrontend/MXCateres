@@ -25,7 +25,7 @@ const ModalDetailWaitingTime: React.FC<ModalDetailWaitingTimeProps> = ({ isOpen,
   return (
     <Modal
       width='1024px'
-      height='1200px'
+      height='900px'
       isOpen={isOpen}
       onClose={onClose}
       isFullscreen={false}
