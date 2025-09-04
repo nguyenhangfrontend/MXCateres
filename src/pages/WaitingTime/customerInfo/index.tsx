@@ -90,18 +90,32 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
             <span>Customer Id:</span>
             <span>{dataCustomerFull?.customerId}</span>
           </div>
+          {dataCustomerFull?.isLeft ? (
+            <>
+              <div className='item-customer flex justify-between items-center'>
+                <span>Last Status:</span>
+                <span>{dataCustomerFull?.status}</span>
+              </div>
+
+              <div className='item-customer flex justify-between items-center'>
+                <span>Current Status:</span>
+                <span>Left</span>
+              </div>
+            </>
+          ) : (
+            <div className='item-customer flex justify-between items-center'>
+              <span>Current Status:</span>
+              <span>{dataCustomerFull?.status}</span>
+            </div>
+          )}
           <div className='item-customer flex justify-between items-center'>
-            <span>Status:</span>
-            <span>{dataCustomerFull?.status}</span>
-          </div>
-          <div className='item-customer flex justify-between items-center'>
-            <span>Total Waiting TIme: </span>
+            <span>Total Waiting Time: </span>
             <span>{dataCustomerFull?.totalDuration}</span>
           </div>
-          <div className='item-customer flex justify-between items-center'>
+          {/* <div className='item-customer flex justify-between items-center'>
             <span>Last Seen At: </span>
-            <span>{moment.utc(dataCustomerFull?.lastSeenAt).format('HH:mm')}</span>
-          </div>
+            <span>{moment(dataCustomerFull?.lastSeenAt).format('HH:mm')}</span>
+          </div> */}
 
           {/* Zone Info */}
           <div className='customer-wrapper grid grid-cols-2 gap-4'>
@@ -109,11 +123,11 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
               <ComponentCard key={item.zone} title={item.zone}>
                 <div className='item-customer flex justify-between items-center'>
                   <span>{`Start ${item.zone}:`}</span>
-                  <span>{item.start ? moment.utc(item.start).format('HH:mm') : ''}</span>
+                  <span>{item.start ? moment(item.start).format('HH:mm') : ''}</span>
                 </div>
                 <div className='item-customer flex justify-between items-center'>
                   <span>{`Finished ${item.zone}:`}</span>
-                  <span>{item?.end ? moment.utc(item?.end).format('HH:mm') : ''}</span>
+                  <span>{item?.end ? moment(item?.end).format('HH:mm') : ''}</span>
                 </div>
                 <div className='item-customer flex justify-between items-center'>
                   <span>{`Duration:`}</span>
@@ -125,8 +139,8 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
           {/* Staff Analysis */}
           <ComponentCard title='Waiter/waitress analysis'>
             <ul className='list-disc pl-6'>
-              <li>waiter/waitress A Server: 6 minutes</li>
-              <li>Compare to Average in a shift: 4 minuts</li>
+              <li>waiter/waitress: _</li>
+              <li>Compare to average in a shift: _</li>
             </ul>
           </ComponentCard>
         </ComponentCard>
@@ -171,7 +185,7 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
                     />
                     <div className='absolute bottom-0 w-full bg-black/50 text-white p-2 text-sm flex justify-between items-center'>
                       <div>{item.label}</div>
-                      <div>{moment.utc(item.capturedAt).format('HH:mm')}</div>
+                      <div>{moment(item.capturedAt).format('HH:mm')}</div>
                     </div>
                   </div>
                 </div>

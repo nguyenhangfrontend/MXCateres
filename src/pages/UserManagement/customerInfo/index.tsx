@@ -23,7 +23,7 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
   useEffect(() => {
     if (!dataCustomer?.customerId) return;
 
-    triggerCustomer({ id: dataCustomer?.id });
+    triggerCustomer({ id: dataCustomer?.customerId });
   }, [dataCustomer?.customerId]);
 
   // ✅ merge API results

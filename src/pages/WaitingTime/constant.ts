@@ -25,12 +25,13 @@ export const orderStatus = [
   { key: 'pending', value: 'Pending' },
   { key: 'ordered', value: 'Ordered' },
   { key: 'picking-up', value: 'Picking-up' },
-  { key: 'complete', value: 'Complete ' },
+  { key: 'completed', value: 'Completed' },
+  { key: 'left', value: 'Left' },
 ];
 export const timeStatuses = [
-  { key: 'green', value: 'Fast ' },
-  { key: 'yellow', value: 'Medium' },
-  { key: 'red', value: 'Slow' },
+  { key: 'fast', value: 'Fast ' },
+  { key: 'medium', value: 'Medium' },
+  { key: 'slow', value: 'Slow' },
 ];
 export const defaultDataCustomer: CustomerInfoType = {
   customerId: '',
@@ -41,6 +42,7 @@ export const defaultDataCustomer: CustomerInfoType = {
   zones: [],
   totalDuration: '',
   processingDuration: '',
+  isLeft: false,
   status: '',
   evidents: [],
 };
@@ -55,6 +57,7 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: 'Mon Jan 15 2024 10:30:00 GMT+0000 (Coordinated Universal Time)',
     endTime: 'Mon Jan 15 2024 10:35:30 GMT+0000 (Coordinated Universal Time)',
     status: 1,
+    isLeft: false,
     timeStatus: '1 minutes',
     customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
@@ -85,6 +88,7 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: '2025-08-22 10:00:00',
     endTime: '2025-08-22 10:12:00',
     status: 2,
+    isLeft: false,
     timeStatus: '1 minutes',
     customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
@@ -115,6 +119,7 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: 'Wed Jan 17 2024 09:45:00 GMT+0000 (Coordinated Universal Time)',
     endTime: 'Wed Jan 17 2024 09:52:10 GMT+0000 (Coordinated Universal Time)',
     status: 3,
+    isLeft: false,
     timeStatus: '1 minutes',
     customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
@@ -145,6 +150,7 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: 'Thu Jan 18 2024 14:20:00 GMT+0000 (Coordinated Universal Time)',
     endTime: 'Thu Jan 18 2024 14:25:40 GMT+0000 (Coordinated Universal Time)',
     status: 3,
+    isLeft: false,
     timeStatus: '1 minutes',
     customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
@@ -175,6 +181,7 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: '2025-08-22 10:00:00',
     endTime: '2025-08-22 10:25:00',
     status: 2,
+    isLeft: false,
     timeStatus: '1 minutes',
     customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
@@ -205,6 +212,7 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: 'Sat Jan 20 2024 08:40:00 GMT+0000 (Coordinated Universal Time)',
     endTime: 'Sat Jan 20 2024 08:45:55 GMT+0000 (Coordinated Universal Time)',
     status: 1,
+    isLeft: false,
     timeStatus: '1 minutes',
     customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
@@ -235,6 +243,7 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: '2025-08-22 10:00:00',
     endTime: '2025-08-22 10:25:00',
     status: 2,
+    isLeft: false,
     timeStatus: '1 minutes',
     customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
@@ -265,6 +274,7 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: 'Mon Jan 22 2024 10:10:00 GMT+0000 (Coordinated Universal Time)',
     endTime: 'Mon Jan 22 2024 10:15:35 GMT+0000 (Coordinated Universal Time)',
     status: 3,
+    isLeft: false,
     timeStatus: '1 minutes',
     customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
@@ -295,6 +305,7 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: '2025-08-22 10:00:00',
     endTime: '2025-08-22 10:25:00',
     status: 1,
+    isLeft: false,
     timeStatus: '1 minutes',
     customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
@@ -325,6 +336,7 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: '2025-08-22 10:00:00',
     endTime: '2025-08-22 10:12:00',
     status: 1,
+    isLeft: false,
     timeStatus: '1 minutes',
     customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',
@@ -355,6 +367,7 @@ export const tableData: WaitingTimeDataType[] = [
     startTime: '2025-08-22 10:00:00',
     endTime: '2025-08-22 10:12:00',
     status: 1,
+    isLeft: false,
     timeStatus: '1 minutes',
     customerProfileUrl:
       'https://media.istockphoto.com/id/1135773946/photo/full-length-portrait-of-young-man-standing-on-white-background.jpg?s=612x612&w=0&k=20&c=1xRxIgrFYHBrQ5K4QcfKresPqbOOt8K3UcnkEAgz4SU=',

@@ -1,15 +1,9 @@
 import { ArrowDownIcon, ArrowUpIcon, BoxIconLine, GroupIcon } from '@/icons';
 import Badge from '@components/ui/badge/Badge';
-
-type EcommerceData = {
-  totalCustomer: number;
-  totalOrders: number;
-  leaveCustomers: number;
-  waitingTimeAverage: number;
-};
+import { DashboardResponse } from '../types';
 
 interface EcommerceMetricsProps {
-  data: EcommerceData;
+  data: DashboardResponse;
 }
 
 export default function EcommerceMetrics({ data }: EcommerceMetricsProps) {
@@ -28,10 +22,10 @@ export default function EcommerceMetrics({ data }: EcommerceMetricsProps) {
               {data.totalCustomer.toLocaleString()}
             </h4>
           </div>
-          <Badge color='success'>
+          {/* <Badge color='success'>
             <ArrowUpIcon />
             11.01%
-          </Badge>
+          </Badge> */}
         </div>
       </div>
 
@@ -48,10 +42,10 @@ export default function EcommerceMetrics({ data }: EcommerceMetricsProps) {
             </h4>
           </div>
 
-          <Badge color='error'>
+          {/* <Badge color='error'>
             <ArrowDownIcon />
             9.05%
-          </Badge>
+          </Badge> */}
         </div>
       </div>
 
@@ -60,18 +54,16 @@ export default function EcommerceMetrics({ data }: EcommerceMetricsProps) {
         <div className='flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800'>
           <BoxIconLine className='text-gray-800 size-6 dark:text-white/90' />
         </div>
-        <div className='text-sm text-gray-500 dark:text-gray-400 mt-5'>Leave Customers</div>
+        <div className='text-sm text-gray-500 dark:text-gray-400 mt-5'>Left Customers</div>
         <div className='flex items-end justify-between'>
           <div>
-            <h4 className='mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90'>
-              {data.leaveCustomers.toLocaleString()}
-            </h4>
+            <h4 className='mt-2 font-bold text-red-500 text-title-sm '>{data.leftCustomers.toLocaleString()}</h4>
           </div>
 
-          <Badge color='error'>
+          {/* <Badge color='error'>
             <ArrowDownIcon />
             9.05%
-          </Badge>
+          </Badge> */}
         </div>
       </div>
 
@@ -84,14 +76,14 @@ export default function EcommerceMetrics({ data }: EcommerceMetricsProps) {
         <div className='flex items-end justify-between'>
           <div>
             <h4 className='mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90'>
-              {data.waitingTimeAverage}m
+              {Math.round(data.waitingTimeAverage)} minutes
             </h4>
           </div>
 
-          <Badge color='error'>
+          {/* <Badge color='error'>
             <ArrowDownIcon />
             9.05%
-          </Badge>
+          </Badge> */}
         </div>
       </div>
     </div>

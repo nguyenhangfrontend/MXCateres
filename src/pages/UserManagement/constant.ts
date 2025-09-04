@@ -23,12 +23,13 @@ export const orderStatus = [
   { key: 'pending', value: 'Pending' },
   { key: 'ordered', value: 'Ordered' },
   { key: 'picking-up', value: 'Picking-up' },
-  { key: 'complete', value: 'Complete ' },
+  { key: 'completed', value: 'Completed' },
+  { key: 'left', value: 'Left' },
 ];
 export const timeStatuses = [
-  { key: 'green', value: 'Fast ' },
-  { key: 'yellow', value: 'Medium' },
-  { key: 'red', value: 'Slow' },
+  { key: 'fast', value: 'Fast ' },
+  { key: 'medium', value: 'Medium' },
+  { key: 'slow', value: 'Slow' },
 ];
 export const defaultDataCustomer: CustomerInfoType = {
   customerId: '',
@@ -40,5 +41,6 @@ export const defaultDataCustomer: CustomerInfoType = {
   totalDuration: '',
   processingDuration: '',
   status: '',
+  isLeft: false,
   evidents: [],
 };
