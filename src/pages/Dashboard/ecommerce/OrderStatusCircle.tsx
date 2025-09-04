@@ -10,6 +10,8 @@ interface OrderStatusCircleProps {
 }
 
 export default function OrderStatusCircle({ data }: OrderStatusCircleProps) {
+  if (!data) return null;
+
   const series = [data.fast, data.medium, data.slow]; // use props
 
   const options: ApexOptions = {
