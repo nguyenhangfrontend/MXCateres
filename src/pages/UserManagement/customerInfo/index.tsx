@@ -21,10 +21,10 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
 
   // ✅ trigger API calls when customerId changes
   useEffect(() => {
-    if (!dataCustomer?.customerId) return;
+    if (!dataCustomer?.id) return;
 
-    triggerCustomer({ id: dataCustomer?.customerId });
-  }, [dataCustomer?.customerId]);
+    triggerCustomer({ id: dataCustomer?.id });
+  }, [dataCustomer?.id]);
 
   // ✅ merge API results
   console.log('customerData', customerData);
