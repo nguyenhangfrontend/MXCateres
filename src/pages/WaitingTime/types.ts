@@ -13,6 +13,7 @@ export type WaitingTimeDataType = {
   evidenceThumbnail: envidenceType;
   customerProfileUrl: string;
   status: number;
+  isLeft: boolean;
 };
 
 export type envidenceType = {

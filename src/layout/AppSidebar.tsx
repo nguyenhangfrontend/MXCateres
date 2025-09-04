@@ -47,12 +47,12 @@ const navItems: NavItem[] = [
     path: '/user-management',
     // subItems: [{ name: 'User List', path: '/user-management', pro: false }],
   },
-  {
-    name: 'Store Occupancy Report',
-    path: '/store-occupancy',
-    icon: <TableIcon />,
-    // subItems: [{ name: 'User List', path: '/store-occupancy', pro: false }],
-  },
+  // {
+  //   name: 'Store Occupancy Report',
+  //   path: '/store-occupancy',
+  //   icon: <TableIcon />,
+  //   // subItems: [{ name: 'User List', path: '/store-occupancy', pro: false }],
+  // },
 
   // {
   //   name: 'Pages',

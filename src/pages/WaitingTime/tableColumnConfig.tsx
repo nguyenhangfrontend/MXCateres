@@ -84,7 +84,7 @@ export function useColumns({ detailWaitingTime }: ColumnType) {
         renderCell: (params) => {
           const ms = params.value && params.row?.timeStatus;
 
-          const colorStatus = ms === 'green' ? 'success' : ms === 'yellow' ? 'warning' : 'error';
+          const colorStatus = ms === 'fast' ? 'success' : ms === 'medium' ? 'warning' : 'error';
           if (ms) {
             return (
               <span className='text-sm text-gray-700 dark:text-gray-300'>
@@ -97,12 +97,20 @@ export function useColumns({ detailWaitingTime }: ColumnType) {
       },
       {
         field: 'timeStatus',
-        headerName: 'Time Order Status',
+        headerName: 'Order Status',
         flex: 0.7,
         minWidth: 150,
         renderCell: (params) => {
-          const severity = params.value === 'green' ? 'success' : params.value === 'yellow' ? 'warning' : 'error';
-          const content = params.value === 'green' ? 'Recieved' : params.value === 'yellow' ? 'Waitting' : 'Pending';
+          const status = params.value && params.row?.status;
+          const isLeft = params.value && params.row?.isLeft;
+
+          let content = '';
+          if (isLeft) {
+            content = 'Left';
+          } else {
+            content = status;
+          }
+          const severity = params.value === 'fast' ? 'success' : params.value === 'medium' ? 'warning' : 'error';
 
           return (
             <Alert sx={{ width: '100%' }} severity={severity}>

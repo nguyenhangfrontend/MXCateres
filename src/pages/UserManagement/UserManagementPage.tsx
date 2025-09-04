@@ -82,12 +82,12 @@ export default function UserManagementPage() {
         title='React.js Basic Tables Dashboard | TailAdmin - Next.js Admin Dashboard Template'
         description='This is React.js Basic Tables Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template'
       /> */}
-      <PageBreadcrumb pageTitle='Waiting Time Page' />
+      <PageBreadcrumb pageTitle='Customer Management Page' />
       <div className='space-y-6'>
-        <ComponentCard title='Filter Waiting Time'>
+        <ComponentCard title='Filter Customer'>
           <SearchForm handleSearch={handleSearch} />
         </ComponentCard>
-        <ComponentCard title='Waiting Time List'>
+        <ComponentCard title='Customer List'>
           <BasicTableOne pagination={false} tableData={dataTable || []} column={{ columns }} />
 
           <ModalDetailCustomer data={userData} isOpen={isModalOpen} onClose={handleCloseModal} />

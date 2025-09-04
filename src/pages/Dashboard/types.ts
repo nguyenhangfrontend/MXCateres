@@ -42,3 +42,24 @@ export type WaitingTimeDetailTypeParams = {
 export type CustomerDetailTypeParams = {
   id: string;
 };
+
+export interface DashboardResponse {
+  status: string;
+  totalCustomer: number;
+  totalOrders: number;
+  leftCustomers: number;
+  waitingTimeAverage: number;
+  orderStatusChart: {
+    slow: number;
+    medium: number;
+    fast: number;
+  };
+  customerChart: {
+    period: string;
+    value: number;
+  }[];
+  waitingTimeChart: {
+    period: string;
+    value: number;
+  }[];
+}

@@ -10,6 +10,7 @@ export type CustomerInfoType = {
   customerId: string;
   totalDuration: string;
   processingDuration: string;
+  isLeft: boolean;
   status: string;
   zones: ZoneDetailCustomer[];
   evidents: CustomerEnvidencesType[];
