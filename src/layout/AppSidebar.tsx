@@ -54,14 +54,11 @@ const navItems: NavItem[] = [
   //   // subItems: [{ name: 'User List', path: '/store-occupancy', pro: false }],
   // },
 
-  // {
-  //   name: 'Pages',
-  //   icon: <PageIcon />,
-  //   subItems: [
-  //     { name: 'Blank Page', path: '/blank', pro: false },
-  //     { name: '404 Error', path: '/error-404', pro: false },
-  //   ],
-  // },
+  {
+    name: 'Setting',
+    icon: <PageIcon />,
+    subItems: [{ name: 'Zones', path: '/setting-zones', pro: false }],
+  },
 ];
 
 // const othersItems: NavItem[] = [

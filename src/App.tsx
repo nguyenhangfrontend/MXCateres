@@ -13,6 +13,7 @@ import Buttons from '@/pages/UiElements/Buttons';
 // import BarChart from '@/pages/Charts/BarChart';
 const UserManagementPage = lazy(() => import('@/pages/UserManagement/UserManagementPage'));
 const WaitingTimePage = lazy(() => import('@/pages/WaitingTime/WaittingTimePage'));
+const SettingZone = lazy(() => import('@/pages/Setting/Zones/SettingZonetPage'));
 const Blank = lazy(() => import('@/pages/Blank'));
 import AppLayout from './layout/AppLayout';
 import { ScrollToTop } from './components/common/ScrollToTop';
@@ -37,6 +38,7 @@ export default function App() {
             <Route path='/user-management' element={<UserManagementPage />} />
             <Route path='/store-occupancy' element={<UserManagementPage />} />
             <Route path='/waiting-time' element={<WaitingTimePage />} />
+            <Route path='/setting-zones' element={<SettingZone />} />
 
             {/* Ui Elements */}
             <Route path='/alerts' element={<Alerts />} />

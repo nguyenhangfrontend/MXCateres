@@ -97,24 +97,53 @@ export function useColumns({ detailWaitingTime }: ColumnType) {
       },
       {
         field: 'timeStatus',
-        headerName: 'Order Status',
+        headerName: 'Time Order Status',
         flex: 0.7,
         minWidth: 150,
         renderCell: (params) => {
-          const status = params.value && params.row?.status;
-          const isLeft = params.value && params.row?.isLeft;
-
-          let content = '';
-          if (isLeft) {
-            content = 'Left';
-          } else {
-            content = status;
-          }
           const severity = params.value === 'fast' ? 'success' : params.value === 'medium' ? 'warning' : 'error';
 
           return (
             <Alert sx={{ width: '100%' }} severity={severity}>
-              {content}
+              {params.row?.isLeft ? 'Left' : params.value}
+            </Alert>
+          );
+        },
+      },
+      {
+        field: 'status',
+        headerName: 'Order Status',
+        flex: 0.7,
+        minWidth: 150,
+        renderCell: (params) => {
+          const { value, row } = params;
+          let bg = '#fee2e2'; // 🔴 default red background
+          let color = '#991b1b'; // 🔴 default red text
+          const label = row?.isLeft ? 'Left' : value;
+
+          if (value === 'completed') {
+            bg = '#dcfce7c4'; // light green
+            color = '#166534'; // dark green
+          } else if (value === 'ordered' || value === 'picking-up') {
+            bg = '#dbeafe'; // light blue
+            color = '#1e40af'; // dark blue
+          } else if (value === 'pending' && (row?.timeStatus === 'medium' || row?.timeStatus === 'fast')) {
+            bg = '#ffedd5'; // light orange
+            color = '#9a3412'; // dark orange
+          }
+
+          return (
+            <Alert
+              icon={false}
+              sx={{
+                width: '100%',
+                bgcolor: bg,
+                color,
+                fontWeight: 600,
+                '& .MuiAlert-message': { width: '100%', textAlign: 'center' },
+              }}
+            >
+              {label}
             </Alert>
           );
         },

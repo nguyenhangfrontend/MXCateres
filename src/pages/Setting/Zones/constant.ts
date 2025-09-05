@@ -1,5 +1,4 @@
 import { CustomerInfoType } from 'src/src/pages/WaitingTime/customerInfo/type';
-import { WaitingTimeDataType } from './types';
 import dayjs from 'dayjs';
 import { DEFAULT_PAGE, DEFAULT_ROWS_PER_PAGE } from 'src/src/components/ui/pagination/const';
 
@@ -7,7 +6,6 @@ export const defaultPagination = {
   total: 0,
   rowsPerPage: DEFAULT_ROWS_PER_PAGE,
   page: DEFAULT_PAGE,
-  rowPerPage: 10,
 };
 export const defaultSearchValue = {
   from: dayjs().startOf('day'),
@@ -42,7 +40,7 @@ export const defaultDataCustomer: CustomerInfoType = {
   zones: [],
   totalDuration: '',
   processingDuration: '',
-  isLeft: false,
   status: '',
+  isLeft: false,
   evidents: [],
 };

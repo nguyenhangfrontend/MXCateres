@@ -781,3 +781,11 @@ span.flatpickr-weekday,
 .slick-next:before {
   font-family: "arial";
 }
+
+.leaflet-pane {
+  position: relative !important;
+}
+img.leaflet-image-layer.leaflet-zoom-animated {
+  width: 100% ;
+  height: 100vh ;
+}
