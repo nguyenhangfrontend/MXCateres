@@ -1,97 +1,128 @@
-import React, { useRef } from 'react';
-import { MapContainer, ImageOverlay, FeatureGroup } from 'react-leaflet';
+import React, { useRef, useEffect, useState } from 'react';
+import { MapContainer, ImageOverlay, FeatureGroup, Polygon, useMap } from 'react-leaflet';
+import { useCreateZoneMutation } from '@/api-request/Setting.api';
 import L from 'leaflet';
 import { EditControl } from 'react-leaflet-draw';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
 
-type Props = {
-  imageUrl: string; // path to your wrapper image
-  width: number; // image width in px
-  height: number; // image height in px
-  onPolygonSaved?: (polygon: { x: number; y: number }[]) => void;
-};
+import { dataZone } from './constant.ts';
+
+type Point = { x: number; y: number };
 
 const SetingZone: React.FC = () => {
-  const imageUrl =
-    'https://img.apmcdn.org/165f5c766fb1906b75cbc3ea32874b890fc032f3/widescreen/d172a5-20250430-people-wait-in-line-at-a-starbucks-webp2000.webp';
-  const width = 2000;
-  const height = 1124;
+  const imageUrl = dataZone.frame_base64;
   const featureGroupRef = useRef<L.FeatureGroup>(null);
 
-  const handleCreated = (e: any) => {
-    // eslint-disable-next-line no-debugger
-    debugger;
+  const [imageSize, setImageSize] = useState<{ width: number; height: number } | null>(null);
+  const [createZone] = useCreateZoneMutation();
 
-    const layer = e.layer;
-    const geojson = layer.toGeoJSON();
+  // 🔹 Load natural image size
+  useEffect(() => {
+    const img = new Image();
+    img.src = imageUrl;
+    img.onload = () => {
+      setImageSize({ width: img.naturalWidth, height: img.naturalHeight });
+    };
+  }, [imageUrl]);
 
-    // coordinates: [[x1, y1], [x2, y2], ...]
-    const coords = geojson.geometry.coordinates[0];
+  if (!imageSize) return <div>Loading image...</div>;
 
-    // Absolute pixel positions
-    const pixelPositions = coords.map(([x, y]: [number, number]) => ({
-      x,
-      y,
+  const { width, height } = imageSize;
+
+  const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), max);
+
+  const pixelsToNormalized = (pts: [number, number][]) =>
+    pts.map(([x, y]) => ({
+      x: clamp(x, 0, width) / width,
+      y: clamp(height - y, 0, height) / height, // flip Y here ✅
     }));
 
-    // Normalized positions (0–1 range)
-    const normalizedPositions = coords.map(([x, y]: [number, number]) => ({
-      x: x / width,
-      y: y / height,
-    }));
+  const normalizedToLatLngs = (zone: Point[]) => zone.map((p) => [p.y * height, p.x * width]) as [number, number][];
 
-    console.log('Pixel positions:', pixelPositions);
-    console.log('Normalized positions:', normalizedPositions);
+  const existingZone: Point[] = pixelsToNormalized(dataZone.points as [number, number][]);
 
-    // Send to backend
-    fetch('/api/zones', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        polygon: pixelPositions,
-        imageSize: { width, height },
-      }),
+  // 🔹 Reusable save logic
+  const savePolygon = (layers: any) => {
+    layers.eachLayer((layer: any) => {
+      const geojson = layer.toGeoJSON();
+      const coords = geojson.geometry.coordinates[0] as [number, number][];
+      console.log(`coords:`, coords);
+      const data = {
+        camera_id: '1',
+        zone_name: 'order',
+        points: coords,
+      };
+      createZone(data);
     });
-
-    // Callback for parent
-    // if (onPolygonSaved) {
-    //   onPolygonSaved(pixelPositions);
-    // }
   };
 
+  // 🔹 Wrap created layer
+  const handleCreated = (e: any) => {
+    const fakeGroup = new L.FeatureGroup();
+    fakeGroup.addLayer(e.layer);
+    savePolygon(fakeGroup);
+  };
+
+  // 🔹 Directly use edited group
+  const handleEdited = (e: any) => {
+    savePolygon(e.layers);
+  };
+
+  // ===============================
+  // 🔹 Map setup
+  // ===============================
   const bounds: [[number, number], [number, number]] = [
     [0, 0],
     [height, width],
   ];
 
-  return (
-    <MapContainer
-      crs={L.CRS.Simple}
-      center={[height / 2, width / 2]}
-      zoom={-1}
-      minZoom={-4}
-      maxZoom={2}
-      style={{ height: '100vh', width: '100%' }}
-    >
-      {/* Wrapper image */}
-      <ImageOverlay url={imageUrl} bounds={bounds} />
+  function FitImageBounds() {
+    const map = useMap();
+    useEffect(() => {
+      map.fitBounds(bounds);
+    }, [map]);
+    return null;
+  }
 
-      <FeatureGroup ref={featureGroupRef}>
-        <EditControl
-          position='topright'
-          onCreated={handleCreated}
-          draw={{
-            polyline: false,
-            rectangle: false,
-            circle: false,
-            circlemarker: false,
-            marker: false,
-            polygon: true,
-          }}
-        />
-      </FeatureGroup>
-    </MapContainer>
+  return (
+    <div style={{ width: '100%', height: '100vh', background: '#888' }}>
+      <MapContainer
+        crs={L.CRS.Simple}
+        bounds={bounds}
+        style={{ width: '100%', height: '100%' }}
+        zoom={0}
+        scrollWheelZoom={true}
+        attributionControl={false}
+        maxBounds={bounds}
+        maxBoundsViscosity={1.0}
+      >
+        <ImageOverlay url={imageUrl} bounds={bounds} />
+        <FitImageBounds />
+
+        <FeatureGroup ref={featureGroupRef}>
+          <EditControl
+            position='topright'
+            onCreated={handleCreated}
+            onEdited={handleEdited}
+            draw={{
+              polyline: false,
+              rectangle: false,
+              circle: false,
+              circlemarker: false,
+              marker: false,
+              polygon: true,
+            }}
+          />
+
+          {/* Existing polygon (from backend, converted to leaflet coords) */}
+          <Polygon
+            positions={normalizedToLatLngs(existingZone)}
+            pathOptions={{ color: 'red' }} // show as blue ✅
+          />
+        </FeatureGroup>
+      </MapContainer>
+    </div>
   );
 };
 
