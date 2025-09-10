@@ -5,7 +5,7 @@ import PaginationFixed from '@/components/ui/pagination';
 import { useEffect, useState } from 'react';
 import { DEFAULT_PAGE, DEFAULT_ROWS_PER_PAGE } from '@/components/ui/pagination/const';
 import { useColumns } from './tableColumnConfig';
-import { defaultPagination, defaultSearchValue, tableData } from './constant';
+import { defaultPagination, defaultSearchValue } from './constant';
 import { useLazyGetWaitingTimeListQuery } from 'src/src/api-request/WattingTime.api';
 import ModalDetailWaitingTime from './ModalDetailWaitingTime';
 import { SearchFormType, WaitingTimeDataType } from './types';
@@ -18,6 +18,7 @@ export default function UserManagementPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [waitingTimeDetailData, setWaitingTimeData] = useState<WaitingTimeDataType>();
   const [getWaittingTimeList, { data }] = useLazyGetWaitingTimeListQuery();
+  
   const [searchedForm, setSeachedForm] = useState<SearchFormType>(defaultSearchValue);
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const dataTable = (data?.data || []).map((item, index) => {
@@ -34,7 +35,6 @@ export default function UserManagementPage() {
     ...defaultPagination,
     ...data?.pagination,
   };
-  console.log('dataPagination', dataPagination);
   useEffect(() => {
     getWaittingTimeList({
       ...defaultSearchValue,

@@ -2,12 +2,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Button, Typography } from '@mui/material';
 import { Modal } from '@/components/ui/modal';
-import ComponentCard from '@/components/common/ComponentCard';
-import { WaitingTimeDataType } from './types';
-import EnvidentFrameDetail from '@/components/envidentFrame';
 import CustomerInfoComponent from 'src/src/pages/WaitingTime/customerInfo';
-import { CustomerInfoType } from 'src/src/pages/WaitingTime/customerInfo/type';
-import { defaultDataCustomer } from './constant';
 
 interface ModalDetailWaitingTimeProps {
   isOpen: boolean;
@@ -16,7 +11,6 @@ interface ModalDetailWaitingTimeProps {
 }
 
 const ModalDetailWaitingTime: React.FC<ModalDetailWaitingTimeProps> = ({ isOpen, onClose, data }) => {
-  const [dataCustomer, setDataCustomer] = useState<CustomerInfoType>(defaultDataCustomer);
 
   // useEffect(() => {
   //   setDataCustomer(data)

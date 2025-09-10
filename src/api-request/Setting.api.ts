@@ -1,28 +1,37 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReauth } from './BaseQuery';
-import {
-  CustomerDetailTypeParams,
-  SearchFormTypeParams,
-  WaitingTimeDetailTypeParams,
-  WaitingTimeResponse,
-} from '@/pages/WaitingTime/types';
+
 import { CustomerDetailResponse, WaitingTimeDetailResponse } from 'src/src/pages/WaitingTime/customerInfo/type';
+import { SearchFormType } from '@/pages/Setting/Zones/types';
 
 export const SettingApi = createApi({
   reducerPath: 'SettingApi',
   baseQuery: baseQueryWithReauth,
+  tagTypes: ['FrameConfig'],
   refetchOnReconnect: true,
-  tagTypes: ['zones'],
   endpoints: (builder) => ({
     createZone: builder.mutation<any, any>({
       query: (body) => ({
-        url: '/api/ai/zone/get_frame_and_config?camera_id=1',
+        url: 'http://10.1.38.54:9000/api/ai/zone/setting_camera_config',
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['zones'],
+      invalidatesTags: ['FrameConfig'],
+    }),
+
+    getFrameConfigBycamera: builder.query<any, SearchFormType>({
+      query: (params) => ({
+        url: 'http://10.1.38.54:9000/api/ai/zone/get_frame_and_config',
+        method: 'GET',
+        params,
+      }),
+      providesTags: ['FrameConfig'],
+      keepUnusedDataFor: 1,
+      transformResponse: (response) => ({
+        ...response,
+      }),
     }),
   }),
 });
 
-export const { useCreateZoneMutation } = SettingApi;
+export const { useCreateZoneMutation, useLazyGetFrameConfigBycameraQuery } = SettingApi;

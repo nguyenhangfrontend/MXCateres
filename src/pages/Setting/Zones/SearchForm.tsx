@@ -1,10 +1,6 @@
-import { useState } from 'react';
-// import { Link } from 'react-router';
-import Input from '@components/form/input/InputField';
-// import Checkbox from '@components/form/input/Checkbox';
+import { useEffect, useState } from 'react';
 import Button from '@components/ui/button/Button';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useLoginMutation } from '@/api-request/Auth.api';
@@ -15,7 +11,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { defaultSearchValue, orderStatus, timeStatuses, workingShift } from './constant';
+import { cameraList, defaultSearchValue, zoneList } from './constant';
+import { useLazyGetFrameConfigBycameraQuery } from 'src/src/api-request/Setting.api';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -28,89 +25,100 @@ const MenuProps = {
   },
 };
 
-export default function SearchForm({ handleSearch }: SearchFormPropsType) {
-  const [login] = useLoginMutation();
+export default function SearchForm({ getDataFrame }: SearchFormPropsType) {
+  const [trigergetFrameConfigBycamera, { data }] = useLazyGetFrameConfigBycameraQuery();
 
   const {
-    handleSubmit,
     control,
     formState: { errors },
+    setValue,
+    watch,
   } = useForm<SearchFormType>({
     mode: 'onChange',
     defaultValues: {
       ...defaultSearchValue,
     },
   });
-  const [showPassword, setShowPassword] = useState(false);
-  // console.log('errors', errors);
-  // console.log(watch('email'));
-  const onSearch: SubmitHandler<SearchFormType> = async (values) => {
-    handleSearch(values);
-    // setLoading(true);
-    // const result: any = await login(values);
-    // console.log('result', result);
-    // setLoading(false);
-    // const status = result.data?.success ? 'success' : 'error';
-    // if (status === 'success') {
-    //   setCookieLocal('token', result?.data?.data.token);
-    //   localStorage.setItem('currentUser', JSON.stringify(result?.data?.user));
-    //   navigate('/');
-    // } else {
-    //   const message = result.error?.data?.message || 'Login fail';
-    //   setErrorLogin(message);
-    // }
-  };
+
+  const cameraId = watch('camera_id');
+  useEffect(() => {
+    console.log('cameraId', cameraId);
+    if (cameraId) {
+      trigergetFrameConfigBycamera({ camera_id: cameraId });
+    }
+  }, [cameraId]);
+
+  useEffect(() => {
+    if (data) {
+      getDataFrame(data);
+      if (data?.zone_name) {
+        console.log('data?.zone_name', data?.zone_name);
+        setValue('zone_name', data?.zone_name); // ✅ update form value
+      }
+    }
+  }, [data, setValue]);
+
   // const [isChecked, setIsChecked] = useState(false);
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className='flex'>
-        <form onSubmit={handleSubmit(onSearch)} className='flex items-end gap-4'>
+        <form className='flex items-end gap-4'>
           {/* From */}
-          <Controller
-            name='from'
-            control={control}
-            render={({ field }) => <DatePicker label='From' value={field.value || null} onChange={field.onChange} />}
-          />
 
-          {/* To */}
           <Controller
-            name='to'
+            name='camera_id'
             control={control}
-            render={({ field }) => <DatePicker label='To' value={field.value || null} onChange={field.onChange} />}
-          />
-          {/* <Controller
-            name='workingShift'
-            control={control}
-            defaultValue={[]}
+            defaultValue={'1'}
             render={({ field }) => {
               console.log('field', field);
               return (
                 <FormControl sx={{ minWidth: 200 }}>
-                  <InputLabel id='workingShift-label'>Working Shift</InputLabel>
+                  <InputLabel id='cameraId-label'>Select Camera</InputLabel>
                   <Select
-                    labelId='workingShift-label'
-                    id='workingShift'
-                    multiple
+                    labelId='cameraId-label'
+                    id='cameraId'
                     value={field.value}
                     onChange={field.onChange}
-                    input={<OutlinedInput label='Working Shift' />} // 👈 label passed here
+                    input={<OutlinedInput label='Select Camera' />} // 👈 label passed here
                     MenuProps={MenuProps}
                   >
-                    {workingShift.map((shift) => (
-                      <MenuItem key={shift.key} value={shift.key}>
-                        {shift.value}
+                    {cameraList.map((camera) => (
+                      <MenuItem key={camera.key} value={camera.key}>
+                        {camera.value}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
               );
             }}
-          /> */}
+          />
+          <Controller
+            name='zone_name'
+            control={control}
+            render={({ field }) => {
+              console.log('field', field);
+              return (
+                <FormControl sx={{ minWidth: 200 }}>
+                  <InputLabel id='zone-label'>Zone</InputLabel>
+                  <Select
+                    labelId='zone-label'
+                    id='zone'
+                    value={field.value ?? ''} // 👈 controlled by RHF
+                    onChange={field.onChange}
+                    input={<OutlinedInput label='Select Zone' />}
+                    MenuProps={MenuProps}
+                  >
+                    {zoneList.map((zone) => (
+                      <MenuItem key={zone.key} value={zone.key}>
+                        {zone.value}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              );
+            }}
+          />
 
-          {/* Button */}
-          <Button height={55} width={100} fontSize='16px' className='shrink-0' size='sm' type='submit'>
-            Search
-          </Button>
         </form>
       </div>
     </LocalizationProvider>

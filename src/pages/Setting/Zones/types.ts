@@ -25,12 +25,16 @@ export type frameDataType = {
 };
 
 export interface SearchFormType {
-  from: Dayjs | null;
-  to: Dayjs | null;
-  workingShift: (string | number)[];
-  statuses: string[];
-  timeStatuses: string[];
+  zone_name?: string;
+  camera_id: string;
 }
+export interface dataFrameFromCamera {
+ camera_id: string,
+  zone_name: string,
+  points: number[][],
+  frame_base64: string
+}
+
 export type SearchFormTypeParams = {
   from: string | null;
   to: string | null;
@@ -44,7 +48,7 @@ export type ColumnType = {
 };
 
 export type SearchFormPropsType = {
-  handleSearch: (values: SearchFormType) => void;
+  getDataFrame: (values: dataFrameFromCamera) => void;
 };
 
 export interface UserListResponse {
