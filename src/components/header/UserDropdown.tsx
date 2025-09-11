@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { DropdownItem } from '@components/UI/dropdown/DropdownItem';
-import { Dropdown } from '@components/UI/dropdown/Dropdown';
+import { DropdownItem } from '@/components/ui/dropdown/DropdownItem';
+import { Dropdown } from '@/components/ui/dropdown/Dropdown';
 import { Link } from 'react-router';
 import { loggedOut } from 'src/src/utils/auth';
 
