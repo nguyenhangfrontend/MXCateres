@@ -26,13 +26,14 @@ export default function UserManagementPage() {
       <PageBreadcrumb pageTitle='Basic Tables' />
       <div className='space-y-6'>
         <ComponentCard title='Basic Table 1'>
-          <BasicTableOne />
+          sdnlsdmsm
+          {/* <BasicTableOne />
           <PaginationFixed
             onSearch={onSearch}
             pagination={pagination}
             pageNumber={pageNumber}
             handlePageChange={handlePageChange}
-          />
+          /> */}
         </ComponentCard>
       </div>
     </>
