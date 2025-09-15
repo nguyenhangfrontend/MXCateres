@@ -57,12 +57,12 @@ const navItems: NavItem[] = [
   {
     name: 'Setting',
     icon: <PageIcon />,
-    subItems: [{ name: 'Zones', path: '/streaming', pro: false }],
+    subItems: [{ name: 'Zones', path: '/setting-zones', pro: false }],
   },
   {
     name: 'Streaming',
     icon: <PageIcon />,
-    subItems: [{ name: 'Streaming', path: '/setting-zones', pro: false }],
+    path: '/streaming',
   },
 ];
 

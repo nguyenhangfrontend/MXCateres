@@ -15,6 +15,7 @@ export default function Home() {
   const [onSearch, setOnSearch] = useState<boolean>(false);
   const [searchedForm, setSeachedForm] = useState<SearchFormType>(defaultSearchValue);
   const [getDashboardData, { data }] = useLazyGetDashboardDataQuery();
+  console.log('data', data);
 
   useEffect(() => {
     getDashboardData({

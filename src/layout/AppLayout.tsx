@@ -13,7 +13,7 @@ const LayoutContent: React.FC = () => {
   const token = getCookieLocal('token');
 
   useEffect(() => {
-    checkAuthorization();
+    // checkAuthorization();
   }, [location.pathname]);
 
   const checkAuthorization = async () => {

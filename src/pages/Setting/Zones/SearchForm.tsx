@@ -25,7 +25,7 @@ const MenuProps = {
   },
 };
 
-export default function SearchForm({ getDataFrame }: SearchFormPropsType) {
+export default function SearchForm({ getDataFrame, getDataSearch }: SearchFormPropsType) {
   const [trigergetFrameConfigBycamera, { data }] = useLazyGetFrameConfigBycameraQuery();
 
   const {
@@ -40,13 +40,19 @@ export default function SearchForm({ getDataFrame }: SearchFormPropsType) {
     },
   });
 
-  const cameraId = watch('camera_id');
+  const camera_id = watch('camera_id');
+  const zone_name = watch('zone_name');
   useEffect(() => {
-    console.log('cameraId', cameraId);
-    if (cameraId) {
-      trigergetFrameConfigBycamera({ camera_id: cameraId });
+    console.log('camera_id', camera_id);
+    if (camera_id) {
+      trigergetFrameConfigBycamera({ camera_id: camera_id });
     }
-  }, [cameraId]);
+  }, [camera_id]);
+
+  useEffect(() => {
+    const data = { zone_name, camera_id };
+    getDataSearch(data);
+  }, [camera_id, zone_name]);
 
   useEffect(() => {
     if (data) {
@@ -73,10 +79,10 @@ export default function SearchForm({ getDataFrame }: SearchFormPropsType) {
               console.log('field', field);
               return (
                 <FormControl sx={{ minWidth: 200 }}>
-                  <InputLabel id='cameraId-label'>Select Camera</InputLabel>
+                  <InputLabel id='camera_id-label'>Select Camera</InputLabel>
                   <Select
-                    labelId='cameraId-label'
-                    id='cameraId'
+                    labelId='camera_id-label'
+                    id='camera_id'
                     value={field.value}
                     onChange={field.onChange}
                     input={<OutlinedInput label='Select Camera' />} // 👈 label passed here
@@ -118,7 +124,6 @@ export default function SearchForm({ getDataFrame }: SearchFormPropsType) {
               );
             }}
           />
-
         </form>
       </div>
     </LocalizationProvider>

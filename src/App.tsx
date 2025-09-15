@@ -20,6 +20,7 @@ import { ScrollToTop } from './components/common/ScrollToTop';
 const Home = lazy(() => import('@/pages/Dashboard/Home'));
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import StreamingPage from '@/pages/Streaming/StreamingPage';
 
 export default function App() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
             <Route path='/store-occupancy' element={<UserManagementPage />} />
             <Route path='/waiting-time' element={<WaitingTimePage />} />
             <Route path='/setting-zones' element={<SettingZone />} />
+            <Route path='/streaming' element={<StreamingPage />} />
 
             {/* Ui Elements */}
             <Route path='/alerts' element={<Alerts />} />

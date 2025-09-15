@@ -29,10 +29,10 @@ export interface SearchFormType {
   camera_id: string;
 }
 export interface dataFrameFromCamera {
- camera_id: string,
-  zone_name: string,
-  points: number[][],
-  frame_base64: string
+  camera_id: string;
+  zone_name: string;
+  points: number[][];
+  frame_base64: string;
 }
 
 export type SearchFormTypeParams = {
@@ -49,6 +49,7 @@ export type ColumnType = {
 
 export type SearchFormPropsType = {
   getDataFrame: (values: dataFrameFromCamera) => void;
+  getDataSearch: (values: any) => void;
 };
 
 export interface UserListResponse {

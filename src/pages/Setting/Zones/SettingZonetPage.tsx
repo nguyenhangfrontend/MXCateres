@@ -19,6 +19,7 @@ const SetingZone: React.FC = () => {
 
   const [imageSize, setImageSize] = useState<{ width: number; height: number } | null>(null);
   const [dataFrame, setDataFrameFromCamera] = useState<dataFrameFromCamera>(dataFrameDefault);
+  const [dataFormChange, setSearchForm] = useState<any>();
   const [createZone] = useCreateZoneMutation();
 
   // 🔹 Load natural image size
@@ -58,16 +59,16 @@ const SetingZone: React.FC = () => {
           return [clamp(x, 0, width), clamp(height - y, 0, height)];
         });
         const data = {
-          camera_id: '1',
-          zone_name: 'order',
+          camera_id: dataFormChange?.camera_id,
+          zone_name: dataFormChange?.zone_name,
           points: points,
         };
         createZone(data);
       });
     } else {
       const data = {
-        camera_id: '1',
-        zone_name: 'order',
+        camera_id: dataFormChange?.camera_id,
+        zone_name: dataFormChange?.zone_name,
         points: [],
       };
       createZone(data);
@@ -109,11 +110,15 @@ const SetingZone: React.FC = () => {
     setDataFrameFromCamera(data);
     // handle search later
   };
+  const getDataSearch = (data: any) => {
+    setSearchForm(data);
+    // handle search later
+  };
 
   return (
     <>
       <ComponentCard className='mb-[20px]' title='Ecommerce Analysis Filter'>
-        <SearchForm getDataFrame={getDataFrame} />
+        <SearchForm getDataSearch={getDataSearch} getDataFrame={getDataFrame} />
       </ComponentCard>
       {imageSize && (
         <div style={{ width: '100%', height: '100vh', background: '#888' }}>
