@@ -4,7 +4,7 @@ import { DashboardApi } from '@/api-request/Dashboard.api';
 import { commonApi } from '@/api-request/Common.api';
 import { WaitingTimeApi } from 'src/src/api-request/WattingTime.api';
 import { SettingApi } from 'src/src/api-request/Setting.api';
-import { StreammingApi } from 'src/src/api-request/Streaaming.api';
+// import { StreammingApi } from 'src/src/api-request/Streaaming.api';
 
 export const apiReducer = {
   [authApi.reducerPath]: authApi.reducer,
@@ -13,7 +13,7 @@ export const apiReducer = {
   [commonApi.reducerPath]: commonApi.reducer,
   [WaitingTimeApi.reducerPath]: WaitingTimeApi.reducer,
   [SettingApi.reducerPath]: SettingApi.reducer,
-  [StreammingApi.reducerPath]: SettingApi.reducer,
+  // [StreammingApi.reducerPath]: SettingApi.reducer,
 };
 
 export const apiMiddleware = [
@@ -23,5 +23,5 @@ export const apiMiddleware = [
   commonApi.middleware,
   WaitingTimeApi.middleware,
   SettingApi.middleware,
-  StreammingApi.middleware,
+  // StreammingApi.middleware,
 ];

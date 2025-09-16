@@ -7,22 +7,22 @@ import L from 'leaflet';
 import SearchForm from './SearchForm.tsx';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
-import { useLazyGetStreamingListQuery } from 'src/src/api-request/Streaaming.api.ts';
+// import { useLazyGetStreamingListQuery } from 'src/src/api-request/Streaaming.api.ts';
 
 export default function MediaList() {
   const [imageSize, setImageSize] = useState<{ width: number; height: number } | null>(null);
   const [dataFrame, setDataFrameFromCamera] = useState<dataFrameFromCamera>(dataFrameDefault);
 
-  const [getStreamingList, { data, isFetching }] = useLazyGetStreamingListQuery();
+  // const [getStreamingList, { data, isFetching }] = useLazyGetStreamingListQuery();
 
-  useEffect(() => {
-    getStreamingList();
-    console.log('isFetching', isFetching);
+  // useEffect(() => {
+  //   getStreamingList();
+  //   console.log('isFetching', isFetching);
 
-    console.log(data);
-  }, [data]);
+  //   console.log(data);
+  // }, [data]);
 
-  const cameras = data; // <-- use API data
+  // const cameras = data; // <-- use API data
 
   // 🔹 Load natural image size
   useEffect(() => {
