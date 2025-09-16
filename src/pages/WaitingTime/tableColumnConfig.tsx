@@ -42,7 +42,7 @@ export function useColumns({ detailWaitingTime }: ColumnType) {
         headerName: 'Customer Profile',
         flex: 0.7,
         renderCell: (params) => {
-          console.log('params', params.value);
+          // console.log('params', params.value);
           return (
             <div className='flex self-start max-w-full'>
               <img src={params.value} alt='preview' className='max-w-full self-start' width={100} height={50} />

@@ -46,7 +46,7 @@ export default function Home() {
         description='React.js Ecommerce Dashboard page for TailAdmin'
       />
 
-      <ComponentCard className='mb-[20px]' title='Ecommerce Analysis Filter'>
+      <ComponentCard className='mb-[20px]' title='Filter'>
         <SearchForm handleSearch={handleSearch} />
       </ComponentCard>
 

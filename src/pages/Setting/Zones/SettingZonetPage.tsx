@@ -22,6 +22,8 @@ const SetingZone: React.FC = () => {
   const [dataFormChange, setSearchForm] = useState<any>();
   const [createZone] = useCreateZoneMutation();
 
+  // console.log(dataFrame, "dataFrame");
+
   // 🔹 Load natural image size
   useEffect(() => {
     if (dataFrame?.frame_base64) {
@@ -31,7 +33,7 @@ const SetingZone: React.FC = () => {
         setImageSize({ width: img.naturalWidth, height: img.naturalHeight });
       };
     }
-  }, [dataFrame?.frame_base64]);
+  }, [dataFrame, dataFrame?.frame_base64]);
 
   const width = imageSize?.width ?? 0;
   const height = imageSize?.height ?? 0;
@@ -50,7 +52,7 @@ const SetingZone: React.FC = () => {
 
   // 🔹 Reusable save logic
   const savePolygon = (layers: any) => {
-    console.log('layers', layers);
+    // console.log('layers', layers);
     if (layers) {
       layers.eachLayer((layer: any) => {
         const geojson = layer.toGeoJSON();
@@ -108,6 +110,7 @@ const SetingZone: React.FC = () => {
 
   const getDataFrame = (data: any) => {
     setDataFrameFromCamera(data);
+    setImageSize(null);
     // handle search later
   };
   const getDataSearch = (data: any) => {
@@ -117,7 +120,7 @@ const SetingZone: React.FC = () => {
 
   return (
     <>
-      <ComponentCard className='mb-[20px]' title='Ecommerce Analysis Filter'>
+      <ComponentCard className='mb-[20px]' title='Search'>
         <SearchForm getDataSearch={getDataSearch} getDataFrame={getDataFrame} />
       </ComponentCard>
       {imageSize && (

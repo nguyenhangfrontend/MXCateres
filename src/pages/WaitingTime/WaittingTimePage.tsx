@@ -18,7 +18,7 @@ export default function UserManagementPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [waitingTimeDetailData, setWaitingTimeData] = useState<WaitingTimeDataType>();
   const [getWaittingTimeList, { data }] = useLazyGetWaitingTimeListQuery();
-  
+
   const [searchedForm, setSeachedForm] = useState<SearchFormType>(defaultSearchValue);
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const dataTable = (data?.data || []).map((item, index) => {
@@ -67,7 +67,7 @@ export default function UserManagementPage() {
       from: dayjs(formValues.from).format('YYYY-MM-DD'),
       to: dayjs(formValues.to).format('YYYY-MM-DD'),
     };
-    console.log('parrams', parrams);
+    // console.log('parrams', parrams);
 
     getWaittingTimeList(parrams);
   };

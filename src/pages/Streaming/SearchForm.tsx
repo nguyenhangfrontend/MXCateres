@@ -42,7 +42,7 @@ export default function SearchForm({ getDataFrame }: SearchFormPropsType) {
 
   const cameraId = watch('camera_id');
   useEffect(() => {
-    console.log('cameraId', cameraId);
+    // console.log('cameraId', cameraId);
     if (cameraId) {
       trigergetFrameConfigBycamera({ camera_id: cameraId });
     }
@@ -52,7 +52,7 @@ export default function SearchForm({ getDataFrame }: SearchFormPropsType) {
     if (data) {
       getDataFrame(data);
       if (data?.zone_name) {
-        console.log('data?.zone_name', data?.zone_name);
+        // console.log('data?.zone_name', data?.zone_name);
         setValue('zone_name', data?.zone_name); // ✅ update form value
       }
     }
@@ -70,7 +70,7 @@ export default function SearchForm({ getDataFrame }: SearchFormPropsType) {
             control={control}
             defaultValue={'1'}
             render={({ field }) => {
-              console.log('field', field);
+              // console.log('field', field);
               return (
                 <FormControl sx={{ minWidth: 200 }}>
                   <InputLabel id='cameraId-label'>Select Camera</InputLabel>
@@ -96,7 +96,7 @@ export default function SearchForm({ getDataFrame }: SearchFormPropsType) {
             name='zone_name'
             control={control}
             render={({ field }) => {
-              console.log('field', field);
+              // console.log('field', field);
               return (
                 <FormControl sx={{ minWidth: 200 }}>
                   <InputLabel id='zone-label'>Zone</InputLabel>
@@ -118,7 +118,6 @@ export default function SearchForm({ getDataFrame }: SearchFormPropsType) {
               );
             }}
           />
-
         </form>
       </div>
     </LocalizationProvider>

@@ -22,7 +22,7 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
   const [triggerCustomer, { data: customerData }] = useLazyGetCustomerDetailQuery();
   const [triggerWaiting, { data: waitingData }] = useLazyGetWaitingTimeDetailQuery();
 
-  console.log('dataCustomer', dataCustomer);
+  // console.log('dataCustomer', dataCustomer);
 
   // ✅ trigger API calls when customerId changes
   useEffect(() => {
@@ -44,8 +44,8 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
       });
     }
   }, [customerData, waitingData]);
-  console.log('customerData', customerData);
-  console.log('customerData', customerData);
+  // console.log('customerData', customerData);
+  // console.log('customerData', customerData);
 
   const handleOpen = (imgUrl: string) => {
     setSelectedImg(imgUrl);
@@ -69,7 +69,7 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
   };
 
   const settingsPartSlider = { ...settings };
-  console.log('dataCustomer?.zones', dataCustomer?.zones);
+  // console.log('dataCustomer?.zones', dataCustomer?.zones);
   return (
     <div className='p-4 grid grid-cols-1 gap-4'>
       {/* Top Section */}

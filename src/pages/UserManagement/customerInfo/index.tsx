@@ -17,7 +17,7 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
   // ✅ lazy queries
   const [triggerCustomer, { data: customerData }] = useLazyGetCustomerDetailQuery();
 
-  console.log('dataCustomer', dataCustomer);
+  // console.log('dataCustomer', dataCustomer);
 
   // ✅ trigger API calls when customerId changes
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
   }, [dataCustomer?.id]);
 
   // ✅ merge API results
-  console.log('customerData', customerData);
+  // console.log('customerData', customerData);
 
   const settings = {
     dots: true,
@@ -41,7 +41,7 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
   };
 
   const settingsPartSlider = { ...settings };
-  console.log('dataCustomer?.zones', dataCustomer?.zones);
+  // console.log('dataCustomer?.zones', dataCustomer?.zones);
   return (
     <div className='p-4 grid grid-cols-1 gap-4'>
       {/* Top Section */}

@@ -1,16 +1,21 @@
-import * as React from 'react';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-import { useLazyGetDashboardDataQuery } from '@/api-request/Dashboard.api';
-import { useLazyGetStreamingListQuery } from 'src/src/api-request/Streaaming.api';
+import React, { useRef, useEffect, useState } from 'react';
+import { dataFrameFromCamera } from './types.ts';
+import { dataFrameDefault } from './constant.ts';
+import ComponentCard from 'src/src/components/common/ComponentCard.tsx';
+import { MapContainer, ImageOverlay, FeatureGroup, Polygon, useMap } from 'react-leaflet';
+import L from 'leaflet';
+import SearchForm from './SearchForm.tsx';
+import 'leaflet/dist/leaflet.css';
+import 'leaflet-draw/dist/leaflet.draw.css';
+import { useLazyGetStreamingListQuery } from 'src/src/api-request/Streaaming.api.ts';
 
-export default function StreamingPage() {
+export default function MediaList() {
+  const [imageSize, setImageSize] = useState<{ width: number; height: number } | null>(null);
+  const [dataFrame, setDataFrameFromCamera] = useState<dataFrameFromCamera>(dataFrameDefault);
+
   const [getStreamingList, { data, isFetching }] = useLazyGetStreamingListQuery();
 
-  React.useEffect(() => {
+  useEffect(() => {
     getStreamingList();
     console.log('isFetching', isFetching);
 
@@ -19,52 +24,63 @@ export default function StreamingPage() {
 
   const cameras = data; // <-- use API data
 
-  return (
-    <ImageList cols={3} rowHeight='auto' gap={12}>
-      {data?.data?.list_infor_camera.map((item: any) => (
-        <ImageListItem
-          key={item.imageUrl}
-          sx={{
-            position: 'relative',
-            borderRadius: 2,
-            overflow: 'hidden',
-            '&:hover .overlay': {
-              opacity: 1,
-            },
-          }}
-        >
-          {/* Image */}
-          <img
-            srcSet={`${item.imageUrl}?w=400&h=250&fit=crop&auto=format&dpr=2 2x`}
-            src={`${item.imageUrl}?w=400&h=250&fit=crop&auto=format`}
-            alt={item.cameraName}
-            loading='lazy'
-            style={{ width: '100%', display: 'block' }}
-          />
+  // 🔹 Load natural image size
+  useEffect(() => {
+    if (dataFrame?.frame_base64) {
+      const img = new Image();
+      img.src = dataFrame?.frame_base64;
+      img.onload = () => {
+        setImageSize({ width: img.naturalWidth, height: img.naturalHeight });
+      };
+    }
+  }, [dataFrame, dataFrame?.frame_base64]);
 
-          {/* Overlay with Play Icon */}
-          <Box
-            className='overlay'
-            sx={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              bgcolor: 'rgba(0,0,0,0.4)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              opacity: 0,
-              transition: 'opacity 0.3s ease',
-            }}
+  const getDataFrame = (data: any) => {
+    setDataFrameFromCamera(data);
+    setImageSize(null);
+    // handle search later
+  };
+
+  const width = imageSize?.width ?? 0;
+  const height = imageSize?.height ?? 0;
+
+  const bounds: [[number, number], [number, number]] = [
+    [0, 0],
+    [height, width],
+  ];
+
+  function FitImageBounds() {
+    const map = useMap();
+    useEffect(() => {
+      map.fitBounds(bounds);
+    }, [map]);
+    return null;
+  }
+
+  console.log(dataFrame, 'dataFrame');
+
+  return (
+    <>
+      <ComponentCard className='mb-[20px]' title='Search'>
+        <SearchForm getDataFrame={getDataFrame} />
+      </ComponentCard>
+      {imageSize && (
+        <div style={{ width: '100%', height: '100vh', background: '#888' }}>
+          <MapContainer
+            crs={L.CRS.Simple}
+            bounds={bounds}
+            style={{ width: '100%', height: '100%' }}
+            zoom={0}
+            scrollWheelZoom={true}
+            attributionControl={false}
+            maxBounds={bounds}
+            maxBoundsViscosity={1.0}
           >
-            <IconButton sx={{ color: 'white', fontSize: 60 }} aria-label={`play ${item.cameraName}`}>
-              <PlayCircleOutlineIcon sx={{ fontSize: 60 }} />
-            </IconButton>
-          </Box>
-        </ImageListItem>
-      ))}
-    </ImageList>
+            <ImageOverlay url={dataFrame?.frame_base64} bounds={bounds} />
+            <FitImageBounds />
+          </MapContainer>
+        </div>
+      )}
+    </>
   );
 }

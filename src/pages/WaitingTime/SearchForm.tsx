@@ -111,7 +111,7 @@ export default function SearchForm({ handleSearch }: SearchFormPropsType) {
             control={control}
             defaultValue={[]}
             render={({ field }) => {
-              console.log('field', field);
+              // console.log('field', field);
               return (
                 <FormControl sx={{ minWidth: 200 }}>
                   <InputLabel id='zoneId-label'>Order Status</InputLabel>
@@ -139,7 +139,7 @@ export default function SearchForm({ handleSearch }: SearchFormPropsType) {
             control={control}
             defaultValue={[]}
             render={({ field }) => {
-              console.log('field', field);
+              // console.log('field', field);
               return (
                 <FormControl sx={{ minWidth: 200 }}>
                   <InputLabel id='zoneId-label'>Time Order Status</InputLabel>

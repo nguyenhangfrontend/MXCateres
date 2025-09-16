@@ -25,8 +25,8 @@ export default function UserManagementPage() {
   const [searchedForm, setSeachedForm] = useState<SearchFormType>(defaultSearchValue);
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
 
-  console.log('data', data);
-  console.log('data?.pagination', data?.pagination);
+  // console.log('data', data);
+  // console.log('data?.pagination', data?.pagination);
   const dataTable = (data?.records || []).map((item, index) => {
     return {
       ...item,
@@ -38,7 +38,7 @@ export default function UserManagementPage() {
     ...defaultPagination,
     pagination: data?.pagination,
   };
-  console.log('dataPagination', dataPagination);
+  // console.log('dataPagination', dataPagination);
   useEffect(() => {
     getUserList({
       ...defaultSearchValue,
@@ -55,7 +55,7 @@ export default function UserManagementPage() {
     getUserList(parrams);
   };
   const detailCustomer = (data: UserType) => {
-    console.log('detailCustomer', data);
+    // console.log('detailCustomer', data);
     setDataCustomer(data);
     setIsModalOpen(true);
   };
@@ -71,7 +71,7 @@ export default function UserManagementPage() {
       from: dayjs(formValues.from).format('YYYY-MM-DD'),
       to: dayjs(formValues.to).format('YYYY-MM-DD'),
     };
-    console.log('parrams', parrams);
+    // console.log('parrams', parrams);
 
     getUserList(parrams);
   };

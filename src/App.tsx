@@ -14,6 +14,7 @@ import Buttons from '@/pages/UiElements/Buttons';
 const UserManagementPage = lazy(() => import('@/pages/UserManagement/UserManagementPage'));
 const WaitingTimePage = lazy(() => import('@/pages/WaitingTime/WaittingTimePage'));
 const SettingZone = lazy(() => import('@/pages/Setting/Zones/SettingZonetPage'));
+const Streaming = lazy(() => import('@/pages/Streaming/StreamingPage'));
 const Blank = lazy(() => import('@/pages/Blank'));
 import AppLayout from './layout/AppLayout';
 import { ScrollToTop } from './components/common/ScrollToTop';
@@ -40,7 +41,7 @@ export default function App() {
             <Route path='/store-occupancy' element={<UserManagementPage />} />
             <Route path='/waiting-time' element={<WaitingTimePage />} />
             <Route path='/setting-zones' element={<SettingZone />} />
-            <Route path='/streaming' element={<StreamingPage />} />
+            <Route path='/streaming' element={<Streaming />} />
 
             {/* Ui Elements */}
             <Route path='/alerts' element={<Alerts />} />
