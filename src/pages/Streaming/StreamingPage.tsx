@@ -76,7 +76,13 @@ export default function MediaList() {
             maxBounds={bounds}
             maxBoundsViscosity={1.0}
           >
-            <ImageOverlay url={dataFrame?.frame_base64} bounds={bounds} />
+            <iframe
+              width='100%'
+              height='100%'
+              src={`http://10.1.56.142:8001/video_feed`}
+              frameBorder='0'
+              allowFullScreen
+            ></iframe>
             <FitImageBounds />
           </MapContainer>
         </div>
