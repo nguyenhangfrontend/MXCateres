@@ -1,92 +1,154 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { dataFrameFromCamera } from './types.ts';
-import { dataFrameDefault } from './constant.ts';
-import ComponentCard from 'src/src/components/common/ComponentCard.tsx';
-import { MapContainer, ImageOverlay, FeatureGroup, Polygon, useMap } from 'react-leaflet';
-import L from 'leaflet';
-import SearchForm from './SearchForm.tsx';
-import 'leaflet/dist/leaflet.css';
-import 'leaflet-draw/dist/leaflet.draw.css';
-// import { useLazyGetStreamingListQuery } from 'src/src/api-request/Streaaming.api.ts';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import Box from '@mui/material/Box';
+import { Typography } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import { useState, useEffect } from 'react';
+import { useLazyGetStreamingDataQuery } from 'src/src/api-request/Setting.api';
+import CloseIcon from "@mui/icons-material/Close"
+import Dialog from "@mui/material/Dialog"
+import DialogTitle from "@mui/material/DialogTitle"
+import DialogContent from "@mui/material/DialogContent"
 
-export default function MediaList() {
-  const [imageSize, setImageSize] = useState<{ width: number; height: number } | null>(null);
-  const [dataFrame, setDataFrameFromCamera] = useState<dataFrameFromCamera>(dataFrameDefault);
+export default function StreamingPage() {
+const [getStreamingData, { data: data }] = useLazyGetStreamingDataQuery();
 
-  // const [getStreamingList, { data, isFetching }] = useLazyGetStreamingListQuery();
+  console.log('data', data);
 
-  // useEffect(() => {
-  //   getStreamingList();
-  //   console.log('isFetching', isFetching);
-
-  //   console.log(data);
-  // }, [data]);
-
-  // const cameras = data; // <-- use API data
-
-  // 🔹 Load natural image size
   useEffect(() => {
-    if (dataFrame?.frame_base64) {
-      const img = new Image();
-      img.src = dataFrame?.frame_base64;
-      img.onload = () => {
-        setImageSize({ width: img.naturalWidth, height: img.naturalHeight });
-      };
-    }
-  }, [dataFrame, dataFrame?.frame_base64]);
+    getStreamingData({});
+  }, []);
 
-  const getDataFrame = (data: any) => {
-    setDataFrameFromCamera(data);
-    setImageSize(null);
-    // handle search later
-  };
+  const [selectedCamera, setSelectedCamera] = useState<any | null>(null)
+  const [modalOpen, setModalOpen] = useState(false)
 
-  const width = imageSize?.width ?? 0;
-  const height = imageSize?.height ?? 0;
-
-  const bounds: [[number, number], [number, number]] = [
-    [0, 0],
-    [height, width],
-  ];
-
-  function FitImageBounds() {
-    const map = useMap();
-    useEffect(() => {
-      map.fitBounds(bounds);
-    }, [map]);
-    return null;
+  const handleCameraClick = (camera: any) => {
+    setSelectedCamera(camera)
+    setModalOpen(true)
   }
 
-  console.log(dataFrame, 'dataFrame');
+  const handleCloseModal = () => {
+    setModalOpen(false)
+    setSelectedCamera(null)
+  }
+
+  const getVideoUrl = (camera: any) => {
+    return camera.streamUrl || camera.rtmpUrl || camera.url || camera.imageUrl
+  }
 
   return (
     <>
-      <ComponentCard className='mb-[20px]' title='Search'>
-        <SearchForm getDataFrame={getDataFrame} />
-      </ComponentCard>
-      {imageSize && (
-        <div style={{ width: '100%', height: '100vh', background: '#888' }}>
-          <MapContainer
-            crs={L.CRS.Simple}
-            bounds={bounds}
-            style={{ width: '100%', height: '100%' }}
-            zoom={0}
-            scrollWheelZoom={true}
-            attributionControl={false}
-            maxBounds={bounds}
-            maxBoundsViscosity={1.0}
-          >
-            <iframe
-              width='100%'
-              height='100%'
-              src={`http://10.1.56.142:8001/video_feed`}
-              frameBorder='0'
-              allowFullScreen
-            ></iframe>
-            <FitImageBounds />
-          </MapContainer>
-        </div>
-      )}
+      <ImageList cols={data?.list_infor_camera?.length % 2 === 0 ? 2 : 3} rowHeight="auto" gap={12}>
+        {data?.list_infor_camera?.map((item: any) => (
+          <div key={item.cameraName}>
+            <Typography variant="h6" component="h2">
+              {item.cameraName}
+            </Typography>
+            <ImageListItem
+              sx={{
+                position: "relative",
+                borderRadius: 2,
+                overflow: "hidden",
+                cursor: "pointer",
+                "&:hover .overlay": {
+                  opacity: 1,
+                },
+              }}
+              onClick={() => handleCameraClick(item)}
+            >
+              {/* Image */}
+              <img
+                srcSet={`${item.imageUrl}?w=400&h=250&fit=crop&auto=format&dpr=2 2x`}
+                src={`${item.imageUrl}`}
+                alt={item.cameraName}
+                loading="lazy"
+                style={{ width: "100%", display: "block" }}
+              />
+              {/* Overlay with Play Icon */}
+              <Box
+                className="overlay"
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  bgcolor: "rgba(0,0,0,0.4)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  opacity: 0,
+                  transition: "opacity 0.3s ease",
+                }}
+              >
+                <IconButton sx={{ color: "white", fontSize: 60 }} aria-label={`play ${item.cameraName}`}>
+                  <PlayCircleOutlineIcon sx={{ fontSize: 60 }} />
+                </IconButton>
+              </Box>
+            </ImageListItem>
+          </div>
+        ))}
+      </ImageList>
+
+      <Dialog
+        open={modalOpen}
+        onClose={handleCloseModal}
+        maxWidth="lg"
+        fullWidth
+        PaperProps={{
+          sx: {
+            bgcolor: "black",
+            color: "white",
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            bgcolor: "rgba(0,0,0,0.8)",
+            color: "white",
+          }}
+        >
+          <Typography variant="h6">{selectedCamera?.cameraName}</Typography>
+          <IconButton onClick={handleCloseModal} sx={{ color: "white" }} aria-label="close">
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+
+        <DialogContent sx={{ p: 0, bgcolor: "black" }}>
+          {selectedCamera && (
+            <Box sx={{ position: "relative", width: "100%", height: "70vh" }}>
+              {/* <video
+                controls
+                autoPlay
+                muted
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                }}
+                onError={(e) => {
+                  console.error("Video loading error:", e)
+                }}
+              >
+                <source src={getVideoUrl(selectedCamera)} type="video/mp4" />
+                <source src={getVideoUrl(selectedCamera)} type="application/x-mpegURL" />
+                <source src={getVideoUrl(selectedCamera)} type="video/webm" />
+                Your browser does not support the video tag.
+                <img
+                  src={selectedCamera.imageUrl || "/placeholder.svg"}
+                  alt={selectedCamera.cameraName}
+                  style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                />
+              </video> */}
+              <iframe src="http://10.1.56.142/video_feed" frameBorder="0" width="100%" height="100%"></iframe>
+            </Box>
+          )}
+        </DialogContent>
+      </Dialog>
     </>
-  );
+  )
 }

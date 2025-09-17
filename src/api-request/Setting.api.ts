@@ -31,7 +31,20 @@ export const SettingApi = createApi({
         ...response,
       }),
     }),
+
+    getStreamingData: builder.query<any, any>({
+      query: (params) => ({
+        url: 'http://10.1.38.54:9000/api/ai/camera/get_list_frame_and_camera_id',
+        method: 'GET',
+        params,
+      }),
+      providesTags: ['FrameConfig'],
+      keepUnusedDataFor: 1,
+      transformResponse: (response) => ({
+        ...response,
+      }),
+    }),
   }),
 });
 
-export const { useCreateZoneMutation, useLazyGetFrameConfigBycameraQuery } = SettingApi;
+export const { useCreateZoneMutation, useLazyGetFrameConfigBycameraQuery, useLazyGetStreamingDataQuery } = SettingApi;
