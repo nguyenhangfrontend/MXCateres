@@ -15,14 +15,9 @@ export type CustomerInfoType = {
   zones: ZoneDetailCustomer[];
   evidents: CustomerEnvidencesType[];
   lastSeenAt: string;
-  parts: PartsBodyType[];
   startTime: string;
 };
 
-export type PartsBodyType = {
-  type: string;
-  imageUrl: string;
-};
 export type ZoneDetailCustomer = {
   zone: string;
   start: string;
