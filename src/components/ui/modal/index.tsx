@@ -11,6 +11,7 @@ interface ModalProps {
   isFullscreen?: boolean; // Default false
   width?: string | number;
   height?: string | number;
+  sx?: any;
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -22,6 +23,7 @@ export const Modal: React.FC<ModalProps> = ({
   isFullscreen = false,
   width,
   height,
+  sx,
 }) => {
   // Auto full screen on small devices if needed
 
@@ -38,6 +40,7 @@ export const Modal: React.FC<ModalProps> = ({
           height: height || 'auto',
           maxHeight: height,
           margin: 0,
+          ...sx,
         },
       }}
       BackdropProps={

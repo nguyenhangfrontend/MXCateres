@@ -10,6 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
+import { Modal } from 'src/src/components/ui/modal';
 
 const AI_BOX_URL = import.meta.env.VITE_AI_BOX_URL;
 
@@ -61,7 +62,7 @@ export default function StreamingPage() {
             >
               {/* Image */}
               <img
-                srcSet={`${item.imageUrl}?w=400&h=250&fit=crop&auto=format&dpr=2 2x`}
+                srcSet={`${item.imageUrl}`}
                 src={`${item.imageUrl}`}
                 alt={item.cameraName}
                 loading='lazy'
@@ -93,17 +94,14 @@ export default function StreamingPage() {
         ))}
       </ImageList>
 
-      <Dialog
-        open={modalOpen}
+      <Modal
+        width='100vw'
+        height='95vh'
+        isOpen={modalOpen}
         onClose={handleCloseModal}
-        maxWidth='lg'
-        fullWidth
-        PaperProps={{
-          sx: {
-            bgcolor: 'black',
-            color: 'white',
-          },
-        }}
+        isFullscreen={false}
+        // className='bg-white dark:bg-gray-900 width-[1200px]'
+        sx={{ p: 0, bgcolor: 'black' }}
       >
         <DialogTitle
           sx={{
@@ -115,14 +113,11 @@ export default function StreamingPage() {
           }}
         >
           <Typography variant='h6'>{selectedCamera?.cameraName}</Typography>
-          <IconButton onClick={handleCloseModal} sx={{ color: 'white' }} aria-label='close'>
-            <CloseIcon />
-          </IconButton>
         </DialogTitle>
 
         <DialogContent sx={{ p: 0, bgcolor: 'black' }}>
           {selectedCamera && (
-            <Box sx={{ position: 'relative', width: '100%', height: '70vh' }}>
+            <Box sx={{ position: 'relative', width: '100%', height: '80vh' }}>
               {/* <video
                 controls
                 autoPlay
@@ -150,7 +145,7 @@ export default function StreamingPage() {
             </Box>
           )}
         </DialogContent>
-      </Dialog>
+      </Modal>
     </>
   );
 }

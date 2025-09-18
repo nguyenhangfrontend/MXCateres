@@ -14,7 +14,7 @@ export const SettingApi = createApi({
   endpoints: (builder) => ({
     createZone: builder.mutation<any, any>({
       query: (body) => ({
-        url: `${AI_BOX_URL}/docs/api/ai/zone/setting_camera_config`,
+        url: `${AI_BOX_URL}/api/ai/zone/setting_camera_config`,
         method: 'POST',
         body,
       }),
@@ -23,7 +23,7 @@ export const SettingApi = createApi({
 
     getFrameConfigBycamera: builder.query<any, SearchFormType>({
       query: (params) => ({
-        url: `${AI_BOX_URL}/docs/api/ai/zone/get_frame_and_config`,
+        url: `${AI_BOX_URL}/api/ai/zone/get_frame_and_config`,
         method: 'GET',
         params,
       }),
@@ -36,7 +36,7 @@ export const SettingApi = createApi({
 
     getStreamingData: builder.query<any, any>({
       query: (params) => ({
-        url: `${AI_BOX_URL}/docs/api/ai/camera/get_list_frame_and_camera_id`,
+        url: `${AI_BOX_URL}/api/ai/camera/get_list_frame_and_camera_id`,
         method: 'GET',
         params,
       }),

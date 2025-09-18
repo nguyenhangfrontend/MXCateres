@@ -109,6 +109,7 @@ export default function SearchForm({ getDataFrame, getDataSearch }: SearchFormPr
                   <Select
                     labelId='zone-label'
                     id='zone'
+                    disabled
                     value={field.value ?? ''} // 👈 controlled by RHF
                     onChange={field.onChange}
                     input={<OutlinedInput label='Select Zone' />}
