@@ -8,16 +8,15 @@ export const defaultPagination = {
   page: DEFAULT_PAGE,
 };
 export const defaultSearchValue = {
-  camera_id: "1",
-
+  camera_id: '1',
 };
 export const zoneList = [
-  { key: "order", value: 'Order' },
-  { key: "pickup", value: 'Pickup' },
+  { key: 'order', value: 'Order' },
+  { key: 'pickup', value: 'Pickup' },
 ];
 export const cameraList = [
-  { key: "1", value: 'Camera 1' },
-  { key: "2", value: 'Camera 2' },
+  { key: '1', value: 'Camera 1' },
+  { key: '2', value: 'Camera 2' },
 ];
 export const orderStatus = [
   { key: 'pending', value: 'Pending' },
@@ -35,7 +34,6 @@ export const defaultDataCustomer: CustomerInfoType = {
   customerId: '',
   lastSeenAt: '',
   startTime: '',
-  parts: [],
   fullbodyUrl: '',
   zones: [],
   totalDuration: '',
@@ -48,7 +46,6 @@ export const defaultDataCustomer: CustomerInfoType = {
 export const dataFrameDefault = {
   camera_id: '',
   zone_name: '',
-  points: [
-  ],
-  frame_base64: ''
+  points: [],
+  frame_base64: '',
 };

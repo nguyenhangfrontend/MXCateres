@@ -71,7 +71,7 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
       </div>
 
       {/* Parts Evidence */}
-      <ComponentCard title='Parts body Envidences'>
+      {/* <ComponentCard title='Parts body Envidences'>
         <CardContent>
           <div className='slider-container'>
             <Slider {...settingsPartSlider}>
@@ -92,7 +92,7 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
             </Slider>
           </div>
         </CardContent>
-      </ComponentCard>
+      </ComponentCard> */}
     </div>
   );
 }

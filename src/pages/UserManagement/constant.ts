@@ -35,7 +35,6 @@ export const defaultDataCustomer: CustomerInfoType = {
   customerId: '',
   lastSeenAt: '',
   startTime: '',
-  parts: [],
   fullbodyUrl: '',
   zones: [],
   totalDuration: '',
