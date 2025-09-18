@@ -31,7 +31,7 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
     triggerCustomer({ id: dataCustomer?.customerId });
     triggerWaiting({
       customerId: dataCustomer?.customerId,
-      date: moment(dataCustomer?.startTime).format('YYYY-MM-DD'),
+      date: moment(dataCustomer?.lastSeenAt).format('YYYY-MM-DD'),
     });
   }, [dataCustomer?.customerId, dataCustomer?.startTime, triggerCustomer, triggerWaiting]);
 

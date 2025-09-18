@@ -4,6 +4,8 @@ import { baseQueryWithReauth } from './BaseQuery';
 import { CustomerDetailResponse, WaitingTimeDetailResponse } from 'src/src/pages/WaitingTime/customerInfo/type';
 import { SearchFormType } from '@/pages/Setting/Zones/types';
 
+const AI_BOX_URL = import.meta.env.VITE_AI_BOX_URL;
+
 export const SettingApi = createApi({
   reducerPath: 'SettingApi',
   baseQuery: baseQueryWithReauth,
@@ -12,7 +14,7 @@ export const SettingApi = createApi({
   endpoints: (builder) => ({
     createZone: builder.mutation<any, any>({
       query: (body) => ({
-        url: 'http://10.1.38.54:9000/api/ai/zone/setting_camera_config',
+        url: `${AI_BOX_URL}/docs/api/ai/zone/setting_camera_config`,
         method: 'POST',
         body,
       }),
@@ -21,7 +23,7 @@ export const SettingApi = createApi({
 
     getFrameConfigBycamera: builder.query<any, SearchFormType>({
       query: (params) => ({
-        url: 'http://10.1.38.54:9000/api/ai/zone/get_frame_and_config',
+        url: `${AI_BOX_URL}/docs/api/ai/zone/get_frame_and_config`,
         method: 'GET',
         params,
       }),
@@ -34,7 +36,7 @@ export const SettingApi = createApi({
 
     getStreamingData: builder.query<any, any>({
       query: (params) => ({
-        url: 'http://10.1.38.54:9000/api/ai/camera/get_list_frame_and_camera_id',
+        url: `${AI_BOX_URL}/docs/api/ai/camera/get_list_frame_and_camera_id`,
         method: 'GET',
         params,
       }),
