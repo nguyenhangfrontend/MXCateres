@@ -35,10 +35,9 @@ export const SettingApi = createApi({
     }),
 
     getStreamingData: builder.query<any, any>({
-      query: (params) => ({
+      query: () => ({
         url: `${AI_BOX_URL}/api/ai/camera/get_list_frame_and_camera_id`,
         method: 'GET',
-        params,
       }),
       providesTags: ['FrameConfig'],
       keepUnusedDataFor: 1,
