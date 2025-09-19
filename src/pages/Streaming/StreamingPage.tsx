@@ -141,7 +141,7 @@ export default function StreamingPage() {
                   style={{ width: "100%", height: "100%", objectFit: "contain" }}
                 />
               </video> */}
-              <iframe src={`${AI_BOX_URL}/video_feed`} frameBorder='0' width='100%' height='100%'></iframe>
+              <img src={`${AI_BOX_URL}/video_feed`} width='100%' height='100%'></img>
             </Box>
           )}
         </DialogContent>
