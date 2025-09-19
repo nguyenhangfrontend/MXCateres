@@ -115,34 +115,14 @@ export default function StreamingPage() {
           <Typography variant='h6'>{selectedCamera?.cameraName}</Typography>
         </DialogTitle>
 
-        <DialogContent sx={{ p: 0, bgcolor: 'black' }}>
+        <DialogContent sx={{ p: 0, bgcolor: 'black', position: 'relative', width: '100%', height: '900px' }}>
           {selectedCamera && (
-            <Box sx={{ position: 'relative', width: '100%', height: '80vh' }}>
-              {/* <video
-                controls
-                autoPlay
-                muted
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "contain",
-                }}
-                onError={(e) => {
-                  console.error("Video loading error:", e)
-                }}
-              >
-                <source src={getVideoUrl(selectedCamera)} type="video/mp4" />
-                <source src={getVideoUrl(selectedCamera)} type="application/x-mpegURL" />
-                <source src={getVideoUrl(selectedCamera)} type="video/webm" />
-                Your browser does not support the video tag.
-                <img
-                  src={selectedCamera.imageUrl || "/placeholder.svg"}
-                  alt={selectedCamera.cameraName}
-                  style={{ width: "100%", height: "100%", objectFit: "contain" }}
-                />
-              </video> */}
-              <img src={`${AI_BOX_URL}/video_feed`} width='100%' height='100%'></img>
-            </Box>
+            <img
+              style={{ objectFit: 'contain', height: '100%', width: '100%', position: 'absolute' }}
+              src={`${AI_BOX_URL}/video_feed`}
+              width='100%'
+              height='100%'
+            ></img>
           )}
         </DialogContent>
       </Modal>
