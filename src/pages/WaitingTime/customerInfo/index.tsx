@@ -88,7 +88,7 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
         <ComponentCard title='Customer Info' className='col-span-2'>
           <div className='item-customer flex justify-between items-center'>
             <span>Customer Id:</span>
-            <span>{dataCustomerFull?.customerId}</span>
+            <span>{dataCustomerFull?.id}</span>
           </div>
           {dataCustomerFull?.isLeft ? (
             <>

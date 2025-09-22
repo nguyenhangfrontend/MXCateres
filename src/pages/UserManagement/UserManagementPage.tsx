@@ -10,6 +10,9 @@ import { SearchFormType, UserType } from './types';
 import SearchForm from './SearchForm';
 import dayjs from 'dayjs';
 import { useLazyGetUserListQuery } from 'src/src/api-request/Users.api';
+import { size } from 'lodash';
+import { PaginationType } from 'src/src/components/ui/pagination/type';
+import { Loading } from 'src/src/components/ui/loading';
 
 export default function UserManagementPage() {
   const [pageNumber, setPageNumber] = useState<number>(1);
@@ -21,37 +24,43 @@ export default function UserManagementPage() {
     id: 0,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [getUserList, { data }] = useLazyGetUserListQuery();
+  const [getUserList, data] = useLazyGetUserListQuery();
+  const [pagination, setPagination] = useState<PaginationType>(defaultPagination);
   const [searchedForm, setSeachedForm] = useState<SearchFormType>(defaultSearchValue);
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
 
   // console.log('data', data);
   // console.log('data?.pagination', data?.pagination);
-  const dataTable = (data?.records || []).map((item, index) => {
+  const dataTable = (data?.data?.records || []).map((item, index) => {
     return {
       ...item,
       evidenceThumbnail: `${imageUrl}${item.evidenceThumbnail}`,
     };
   });
 
-  const dataPagination = {
-    ...defaultPagination,
-    pagination: data?.pagination,
-  };
   // console.log('dataPagination', dataPagination);
+  useEffect(() => {
+    setPagination({ ...pagination, total: data?.data?.pagination?.total });
+  }, [data?.data?.pagination]);
   useEffect(() => {
     getUserList({
       ...defaultSearchValue,
       from: dayjs(defaultSearchValue.from).format('YYYY-MM-DD'),
       to: dayjs(defaultSearchValue.to).format('YYYY-MM-DD'),
+      page: 1,
+      size: 10,
     });
   }, []);
-  const handlePageChange = () => {
+  const handlePageChange = (e: any, pageNumber: number, size: number) => {
     const parrams = {
       ...searchedForm,
       from: dayjs(searchedForm.from).format('YYYY-MM-DD'),
       to: dayjs(searchedForm.to).format('YYYY-MM-DD'),
+      page: pageNumber,
+      size: size,
     };
+    setPageNumber(pageNumber);
+    setPagination({ ...pagination, rowsPerPage: size, page: pageNumber });
     getUserList(parrams);
   };
   const detailCustomer = (data: UserType) => {
@@ -70,6 +79,8 @@ export default function UserManagementPage() {
       ...formValues,
       from: dayjs(formValues.from).format('YYYY-MM-DD'),
       to: dayjs(formValues.to).format('YYYY-MM-DD'),
+      page: 1,
+      size: 10,
     };
     // console.log('parrams', parrams);
 
@@ -82,6 +93,7 @@ export default function UserManagementPage() {
         title='React.js Basic Tables Dashboard | TailAdmin - Next.js Admin Dashboard Template'
         description='This is React.js Basic Tables Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template'
       /> */}
+      <Loading isOpen={data?.status === 'pending'} />
       <PageBreadcrumb pageTitle='Customer Management Page' />
       <div className='space-y-6'>
         <ComponentCard title='Filter Customer'>
@@ -95,8 +107,8 @@ export default function UserManagementPage() {
         {dataTable.length && (
           <PaginationFixed
             onSearch={onSearch}
-            pagination={dataPagination}
-            // pageNumber={pageNumber}
+            pagination={pagination}
+            pageNumber={pageNumber}
             handlePageChange={handlePageChange}
           />
         )}

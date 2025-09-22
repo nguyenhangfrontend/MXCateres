@@ -11,11 +11,12 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import { Modal } from 'src/src/components/ui/modal';
+import { Loading } from 'src/src/components/ui/loading';
 
 const AI_BOX_URL = import.meta.env.VITE_AI_BOX_URL;
 
 export default function StreamingPage() {
-  const [getStreamingData, { data: data }] = useLazyGetStreamingDataQuery();
+  const [getStreamingData, data] = useLazyGetStreamingDataQuery();
 
   console.log('data', data);
 
@@ -42,8 +43,9 @@ export default function StreamingPage() {
 
   return (
     <>
-      <ImageList cols={data?.list_infor_camera?.length % 2 === 0 ? 2 : 3} rowHeight='auto' gap={12}>
-        {data?.list_infor_camera?.map((item: any) => (
+      <Loading isOpen={data?.status === 'pending'} />
+      <ImageList cols={data?.data?.list_infor_camera?.length % 2 === 0 ? 2 : 3} rowHeight='auto' gap={12}>
+        {data?.data?.list_infor_camera?.map((item: any) => (
           <div key={item.cameraName}>
             <Typography variant='h6' component='h2'>
               {item.cameraName}

@@ -45,6 +45,8 @@ export type SearchFormTypeParams = {
   workingShift: (string | number)[];
   statuses: string[];
   timeStatuses: string[];
+  page: number;
+  size: number;
 };
 
 export type ColumnType = {

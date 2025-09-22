@@ -48,8 +48,9 @@ export type ColumnType = {
 };
 
 export type SearchFormPropsType = {
-  getDataFrame: (values: dataFrameFromCamera) => void;
+  getDataFrame: (values: any) => void;
   getDataSearch: (values: any) => void;
+  getStatus: (status: any) => void;
 };
 
 export interface UserListResponse {

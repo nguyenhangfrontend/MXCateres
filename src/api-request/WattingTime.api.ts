@@ -21,11 +21,13 @@ export const WaitingTimeApi = createApi({
         params,
       }),
       keepUnusedDataFor: 1,
-      transformResponse: (response) => ({
-        ...response?.data,
-        pagination: response?.data?.pagination,
-        status: response?.data?.status,
-      }),
+      transformResponse: (response) => {
+        return {
+          ...response?.data,
+          pagination: response?.data?.pagination,
+          status: response?.data?.status,
+        };
+      },
     }),
 
     getWaitingTimeDetail: builder.query<WaitingTimeDetailResponse, WaitingTimeDetailTypeParams>({

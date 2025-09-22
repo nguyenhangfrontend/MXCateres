@@ -8,10 +8,6 @@ export const ROWS_PER_PAGE_OPTIONS: MenuDropDown = [
     value: DEFAULT_ROWS_PER_PAGE,
   },
   {
-    key: 10,
-    value: 10,
-  },
-  {
     key: 20,
     value: 20,
   },

@@ -10,6 +10,7 @@ import { dataFrameDefault } from './constant.ts';
 import ComponentCard from 'src/src/components/common/ComponentCard.tsx';
 import SearchForm from './SearchForm.tsx';
 import { dataFrameFromCamera } from './types.ts';
+import { Loading } from 'src/src/components/ui/loading/index.tsx';
 
 type Point = { x: number; y: number };
 
@@ -19,6 +20,7 @@ const SetingZone: React.FC = () => {
 
   const [imageSize, setImageSize] = useState<{ width: number; height: number } | null>(null);
   const [dataFrame, setDataFrameFromCamera] = useState<dataFrameFromCamera>(dataFrameDefault);
+  const [status, setStatus] = useState<string>('');
   const [dataFormChange, setSearchForm] = useState<any>();
   const [createZone] = useCreateZoneMutation();
 
@@ -113,15 +115,19 @@ const SetingZone: React.FC = () => {
     setImageSize(null);
     // handle search later
   };
+
+  const getStatus = (status: string) => {
+    setStatus(status);
+  };
   const getDataSearch = (data: any) => {
     setSearchForm(data);
     // handle search later
   };
-
   return (
     <>
+      <Loading isOpen={status === 'pending'} />
       <ComponentCard className='mb-[20px]' title='Search'>
-        <SearchForm getDataSearch={getDataSearch} getDataFrame={getDataFrame} />
+        <SearchForm getStatus={getStatus} getDataSearch={getDataSearch} getDataFrame={getDataFrame} />
       </ComponentCard>
       {imageSize && (
         <div style={{ width: '100%', height: '100vh', background: '#888' }}>

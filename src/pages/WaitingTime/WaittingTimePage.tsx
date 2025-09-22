@@ -11,17 +11,21 @@ import ModalDetailWaitingTime from './ModalDetailWaitingTime';
 import { SearchFormType, WaitingTimeDataType } from './types';
 import SearchForm from './SearchForm';
 import dayjs from 'dayjs';
+import { PaginationType } from 'src/src/components/ui/pagination/type';
+import { Loading } from 'src/src/components/ui/loading';
 
 export default function UserManagementPage() {
   const [pageNumber, setPageNumber] = useState<number>(1);
+  const [pagination, setPagination] = useState<PaginationType>(defaultPagination);
   const [onSearch, setOnSearch] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [waitingTimeDetailData, setWaitingTimeData] = useState<WaitingTimeDataType>();
-  const [getWaittingTimeList, { data }] = useLazyGetWaitingTimeListQuery();
+  const [getWaittingTimeList, data] = useLazyGetWaitingTimeListQuery();
+  console.log('data', data);
 
   const [searchedForm, setSeachedForm] = useState<SearchFormType>(defaultSearchValue);
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
-  const dataTable = (data?.data || []).map((item, index) => {
+  const dataTable = (data?.data?.data || []).map((item, index) => {
     return {
       ...item,
       id: index + 1,
@@ -31,23 +35,30 @@ export default function UserManagementPage() {
 
   // console.log('dataTable', dataTable);
 
-  const dataPagination = {
-    ...defaultPagination,
-    ...data?.pagination,
-  };
+  useEffect(() => {
+    setPagination({ ...pagination, total: data?.data?.pagination?.total });
+  }, [data?.data?.pagination]);
+
+  console.log('data', data);
   useEffect(() => {
     getWaittingTimeList({
       ...defaultSearchValue,
       from: dayjs(defaultSearchValue.from).format('YYYY-MM-DD'),
       to: dayjs(defaultSearchValue.to).format('YYYY-MM-DD'),
+      page: 1,
+      size: 10,
     });
   }, []);
-  const handlePageChange = () => {
+  const handlePageChange = (e: any, pageNumber: number, size: number) => {
     const parrams = {
       ...searchedForm,
       from: dayjs(searchedForm.from).format('YYYY-MM-DD'),
       to: dayjs(searchedForm.to).format('YYYY-MM-DD'),
+      page: pageNumber,
+      size,
     };
+    setPageNumber(pageNumber);
+    setPagination({ ...pagination, rowsPerPage: size, page: pageNumber });
     getWaittingTimeList(parrams);
   };
   const detailWaitingTime = (data: WaitingTimeDataType) => {
@@ -66,6 +77,8 @@ export default function UserManagementPage() {
       ...formValues,
       from: dayjs(formValues.from).format('YYYY-MM-DD'),
       to: dayjs(formValues.to).format('YYYY-MM-DD'),
+      page: 1,
+      size: 10,
     };
     // console.log('parrams', parrams);
 
@@ -78,6 +91,7 @@ export default function UserManagementPage() {
         title='React.js Basic Tables Dashboard | TailAdmin - Next.js Admin Dashboard Template'
         description='This is React.js Basic Tables Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template'
       /> */}
+      <Loading isOpen={data?.status === 'pending'} />
       <PageBreadcrumb pageTitle='Waiting Time Page' />
       <div className='space-y-6'>
         <ComponentCard title='Filter Waiting Time'>
@@ -88,7 +102,7 @@ export default function UserManagementPage() {
           {dataTable.length && (
             <PaginationFixed
               onSearch={onSearch}
-              pagination={dataPagination}
+              pagination={pagination}
               pageNumber={pageNumber}
               handlePageChange={handlePageChange}
             />

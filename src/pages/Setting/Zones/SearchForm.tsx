@@ -25,8 +25,8 @@ const MenuProps = {
   },
 };
 
-export default function SearchForm({ getDataFrame, getDataSearch }: SearchFormPropsType) {
-  const [trigergetFrameConfigBycamera, { data }] = useLazyGetFrameConfigBycameraQuery();
+export default function SearchForm({ getDataFrame, getDataSearch, getStatus }: SearchFormPropsType) {
+  const [trigergetFrameConfigBycamera, data] = useLazyGetFrameConfigBycameraQuery();
 
   const {
     control,
@@ -55,14 +55,18 @@ export default function SearchForm({ getDataFrame, getDataSearch }: SearchFormPr
   }, [camera_id, zone_name]);
 
   useEffect(() => {
-    if (data) {
-      getDataFrame(data);
-      if (data?.zone_name) {
+    if (data?.data) {
+      getDataFrame(data?.data);
+
+      if (data?.data?.zone_name) {
         // console.log('data?.zone_name', data?.zone_name);
-        setValue('zone_name', data?.zone_name); // ✅ update form value
+        setValue('zone_name', data?.data?.zone_name); // ✅ update form value
       }
     }
+    getStatus(data?.status);
   }, [data, setValue]);
+
+  console.log('data', data);
 
   // const [isChecked, setIsChecked] = useState(false);
   return (
