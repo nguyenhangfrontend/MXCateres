@@ -33,18 +33,6 @@ export const timeStatuses = [
   { key: 'medium', value: 'Medium' },
   { key: 'slow', value: 'Slow' },
 ];
-export const defaultDataCustomer: CustomerInfoType = {
-  customerId: '',
-  lastSeenAt: '',
-  startTime: '',
-  fullbodyUrl: '',
-  zones: [],
-  totalDuration: '',
-  processingDuration: '',
-  status: '',
-  isLeft: false,
-  evidents: [],
-};
 
 // src/data/mockEcommerceData.ts
 export const mockEcommerceData = {
