@@ -132,7 +132,7 @@ const DropDown = ({
 };
 
 function PaginationFixed({ onSearch, pagination, pageNumber, handlePageChange }: PaginationFixedProps) {
-  console.log('pagination', pagination.rowsPerPage);
+  console.log('pagination', pagination);
   return (
     <>
       {/* {onSearch && ( */}

@@ -29,11 +29,12 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
     if (!dataCustomer?.customerId) return;
 
     triggerCustomer({ id: dataCustomer?.customerId });
+    const time = dataCustomer.startTime ? dataCustomer.startTime : dataCustomer.endTime;
     triggerWaiting({
       customerId: dataCustomer?.customerId,
-      date: moment(dataCustomer?.lastSeenAt).format('YYYY-MM-DD'),
+      date: moment(time).format('YYYY-MM-DD'),
     });
-  }, [dataCustomer?.customerId, dataCustomer?.startTime, triggerCustomer, triggerWaiting]);
+  }, [dataCustomer?.customerId, triggerCustomer, triggerWaiting]);
 
   // ✅ merge API results
   useEffect(() => {
@@ -87,8 +88,8 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
         {/* Customer Info */}
         <ComponentCard title='Customer Info' className='col-span-2'>
           <div className='item-customer flex justify-between items-center'>
-            <span>Customer Id:</span>
-            <span>{dataCustomerFull?.id}</span>
+            <span>Customer Name:</span>
+            <span>{dataCustomerFull?.customerName}</span>
           </div>
           {dataCustomerFull?.isLeft ? (
             <>
@@ -123,11 +124,11 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
               <ComponentCard key={item.zone} title={item.zone}>
                 <div className='item-customer flex justify-between items-center'>
                   <span>{`Start ${item.zone}:`}</span>
-                  <span>{item.start ? moment(item.start).format('HH:mm') : ''}</span>
+                  <span>{item.start ? moment(item.start).format('HH:mm:ss') : ''}</span>
                 </div>
                 <div className='item-customer flex justify-between items-center'>
                   <span>{`Finished ${item.zone}:`}</span>
-                  <span>{item?.end ? moment(item?.end).format('HH:mm') : ''}</span>
+                  <span>{item?.end ? moment(item?.end).format('HH:mm:ss') : ''}</span>
                 </div>
                 <div className='item-customer flex justify-between items-center'>
                   <span>{`Duration:`}</span>

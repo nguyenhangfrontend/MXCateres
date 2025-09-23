@@ -32,8 +32,8 @@ export function useColumns({ detailWaitingTime }: ColumnType) {
       //   renderCell: (params) => <span className='text-sm text-gray-700 dark:text-gray-300'>{params.value}</span>,
       // },
       {
-        field: 'customerId',
-        headerName: 'Customer ID',
+        field: 'customerName',
+        headerName: 'Customer Name',
         flex: 1,
         renderCell: (params) => <span className='text-sm text-gray-700 dark:text-gray-300'>{params.value}</span>,
       },
@@ -105,7 +105,7 @@ export function useColumns({ detailWaitingTime }: ColumnType) {
 
           return (
             <Alert sx={{ width: '100%' }} severity={severity}>
-              {params.row?.isLeft ? 'Left' : params.value}
+              {params.value}
             </Alert>
           );
         },

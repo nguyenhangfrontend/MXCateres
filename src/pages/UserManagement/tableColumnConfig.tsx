@@ -32,8 +32,8 @@ export function useColumns({ detailCustomer }: ColumnType) {
       //   renderCell: (params) => <span className='text-sm text-gray-700 dark:text-gray-300'>{params.value}</span>,
       // },
       {
-        field: 'id',
-        headerName: 'Customer ID',
+        field: 'customerName',
+        headerName: 'Customer Name',
         flex: 1,
         renderCell: (params) => <span className='text-sm text-gray-700 dark:text-gray-300'>{params.value}</span>,
       },

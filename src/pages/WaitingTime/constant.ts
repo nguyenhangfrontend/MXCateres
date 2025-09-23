@@ -33,15 +33,17 @@ export const timeStatuses = [
   { key: 'medium', value: 'Medium' },
   { key: 'slow', value: 'Slow' },
 ];
+
 export const defaultDataCustomer: CustomerInfoType = {
+  camera: '',
   customerId: '',
-  lastSeenAt: '',
-  startTime: '',
-  fullbodyUrl: '',
-  zones: [],
-  totalDuration: '',
-  processingDuration: '',
+  customerName: '',
+  customerProfileUrl: '',
+  endTime: '',
+  id: 0,
   isLeft: false,
+  startTime: '',
   status: '',
-  evidents: [],
+  timeStatus: '',
+  waitingTime: '',
 };

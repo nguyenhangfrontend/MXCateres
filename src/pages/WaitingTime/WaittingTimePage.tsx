@@ -23,6 +23,8 @@ export default function UserManagementPage() {
   const [getWaittingTimeList, data] = useLazyGetWaitingTimeListQuery();
   console.log('data', data);
 
+  console.log("paginationnnn", pageNumber, pagination);
+
   const [searchedForm, setSeachedForm] = useState<SearchFormType>(defaultSearchValue);
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
   const dataTable = (data?.data?.data || []).map((item, index) => {

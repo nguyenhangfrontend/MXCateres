@@ -6,16 +6,19 @@ export type CustomerEnvidencesType = {
 };
 
 export type CustomerInfoType = {
-  fullbodyUrl: string;
+  camera: string;
   customerId: string;
-  totalDuration: string;
-  processingDuration: string;
+  customerName: string;
+  customerProfileUrl: string;
+  endTime: string;
+  id: number;
   isLeft: boolean;
-  status: string;
-  zones: ZoneDetailCustomer[];
-  evidents: CustomerEnvidencesType[];
-  lastSeenAt: string;
   startTime: string;
+  status: string;
+  timeStatus: string;
+  waitingTime: string;
+  fullbodyUrl?: string;
+  lastSeenAt?: string
 };
 
 export type ZoneDetailCustomer = {
