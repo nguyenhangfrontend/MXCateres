@@ -45,55 +45,59 @@ export default function StreamingPage() {
     <>
       <Loading isOpen={data?.status === 'pending'} />
       <ImageList cols={data?.data?.list_infor_camera?.length % 2 === 0 ? 2 : 3} rowHeight='auto' gap={12}>
-        {data?.data?.list_infor_camera?.map((item: any) => (
-          <div key={item.cameraName}>
-            <Typography variant='h6' component='h2'>
-              {item.cameraName}
-            </Typography>
-            <ImageListItem
-              sx={{
-                position: 'relative',
-                borderRadius: 2,
-                overflow: 'hidden',
-                cursor: 'pointer',
-                '&:hover .overlay': {
-                  opacity: 1,
-                },
-              }}
-              onClick={() => handleCameraClick(item)}
-            >
-              {/* Image */}
-              <img
-                srcSet={`${item.imageUrl}`}
-                src={`${item.imageUrl}`}
-                alt={item.cameraName}
-                loading='lazy'
-                style={{ width: '100%', display: 'block' }}
-              />
-              {/* Overlay with Play Icon */}
-              <Box
-                className='overlay'
+        {data?.data?.list_infor_camera?.map((item: any) => {
+          return item?.imageUrl ? (
+            <div key={item.cameraName}>
+              <Typography variant='h6' component='h2'>
+                {item.cameraName}
+              </Typography>
+              <ImageListItem
                 sx={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  bgcolor: 'rgba(0,0,0,0.4)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  opacity: 0,
-                  transition: 'opacity 0.3s ease',
+                  position: 'relative',
+                  borderRadius: 2,
+                  overflow: 'hidden',
+                  cursor: 'pointer',
+                  '&:hover .overlay': {
+                    opacity: 1,
+                  },
                 }}
+                onClick={() => handleCameraClick(item)}
               >
-                <IconButton sx={{ color: 'white', fontSize: 60 }} aria-label={`play ${item.cameraName}`}>
-                  <PlayCircleOutlineIcon sx={{ fontSize: 60 }} />
-                </IconButton>
-              </Box>
-            </ImageListItem>
-          </div>
-        ))}
+                {/* Image */}
+                <img
+                  srcSet={`${item.imageUrl}`}
+                  src={`${item.imageUrl}`}
+                  alt={item.cameraName}
+                  loading='lazy'
+                  style={{ width: '100%', display: 'block' }}
+                />
+                {/* Overlay with Play Icon */}
+                <Box
+                  className='overlay'
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    bgcolor: 'rgba(0,0,0,0.4)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    opacity: 0,
+                    transition: 'opacity 0.3s ease',
+                  }}
+                >
+                  <IconButton sx={{ color: 'white', fontSize: 60 }} aria-label={`play ${item.cameraName}`}>
+                    <PlayCircleOutlineIcon sx={{ fontSize: 60 }} />
+                  </IconButton>
+                </Box>
+              </ImageListItem>
+            </div>
+          ) : (
+            <></>
+          );
+        })}
       </ImageList>
 
       <Modal
