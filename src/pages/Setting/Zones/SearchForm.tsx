@@ -44,24 +44,27 @@ export default function SearchForm({ getDataFrame, getDataSearch, getStatus }: S
   const zone_name = watch('zone_name');
   useEffect(() => {
     // console.log('cameraId', cameraId);
+    const cameraId = zone_name ? (zone_name === 'order' ? 'cam1' : 'cam2') : camera_id;
+
+    setValue('camera_id', zone_name ? (zone_name === 'order' ? 'cam1' : 'cam2') : camera_id);
     if (camera_id) {
-      trigergetFrameConfigBycamera({ camera_id: camera_id });
+      trigergetFrameConfigBycamera({ camera_id: cameraId });
     }
-  }, [camera_id]);
+  }, [camera_id, zone_name]);
 
   useEffect(() => {
-    const data = { zone_name, camera_id };
     getDataSearch(data);
   }, [camera_id, zone_name]);
 
   useEffect(() => {
+    console.log('data?.data', data?.data);
     if (data?.data) {
       getDataFrame(data?.data);
 
-      if (data?.data?.zone_name) {
-        // console.log('data?.zone_name', data?.zone_name);
-        setValue('zone_name', data?.data?.zone_name); // ✅ update form value
-      }
+      // if (data?.data?.zone_name) {
+      //   // console.log('data?.zone_name', data?.zone_name);
+      //   setValue('zone_name', data?.data?.zone_name); // ✅ update form value
+      // }
     }
     getStatus(data?.status);
   }, [data, setValue]);
@@ -113,7 +116,7 @@ export default function SearchForm({ getDataFrame, getDataSearch, getStatus }: S
                   <Select
                     labelId='zone-label'
                     id='zone'
-                    disabled
+                    // disabled
                     value={field.value ?? ''} // 👈 controlled by RHF
                     onChange={field.onChange}
                     input={<OutlinedInput label='Select Zone' />}

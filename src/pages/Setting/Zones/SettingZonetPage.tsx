@@ -54,6 +54,7 @@ const SetingZone: React.FC = () => {
 
   // 🔹 Reusable save logic
   const savePolygon = (layers: any) => {
+    console.log('dataFormChange', dataFormChange?.zone_name);
     // console.log('layers', layers);
     if (layers) {
       layers.eachLayer((layer: any) => {
