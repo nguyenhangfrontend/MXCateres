@@ -13,6 +13,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { cameraList, defaultSearchValue, zoneList } from './constant';
 import { useLazyGetFrameConfigBycameraQuery } from 'src/src/api-request/Setting.api';
+import { set } from 'lodash';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -42,35 +43,48 @@ export default function SearchForm({ getDataFrame, getDataSearch, getStatus }: S
 
   const camera_id = watch('camera_id');
   const zone_name = watch('zone_name');
-  useEffect(() => {
-    // console.log('cameraId', cameraId);
-    const cameraId = zone_name ? (zone_name === 'order' ? 'cam1' : 'cam2') : camera_id;
 
-    setValue('camera_id', zone_name ? (zone_name === 'order' ? 'cam1' : 'cam2') : camera_id);
+  useEffect(() => {
     if (camera_id) {
-      trigergetFrameConfigBycamera({ camera_id: cameraId });
+      trigergetFrameConfigBycamera({ camera_id: camera_id });
     }
+  }, [camera_id]);
+
+  useEffect(() => {
+    const dataSearch = {
+      camera_id: camera_id,
+      zone_name: zone_name,
+    };
+
+    getDataSearch(dataSearch);
   }, [camera_id, zone_name]);
 
   useEffect(() => {
-    getDataSearch(data);
-  }, [camera_id, zone_name]);
-
-  useEffect(() => {
-    console.log('data?.data', data?.data);
     if (data?.data) {
       getDataFrame(data?.data);
-
-      // if (data?.data?.zone_name) {
-      //   // console.log('data?.zone_name', data?.zone_name);
-      //   setValue('zone_name', data?.data?.zone_name); // ✅ update form value
-      // }
     }
     getStatus(data?.status);
-  }, [data, setValue]);
+  }, [data]);
 
-  console.log('data', data);
+  const changeCamera = (event: any) => {
+    // setValue('camera_id', event.target.value);
+    const zone = event.target.value === 'cam1' ? 'order' : 'pickup';
+    setValue('zone_name', zone); // reset zone when camera changes
+    trigergetFrameConfigBycamera({ camera_id: event.target.value });
+  };
 
+  const changeZone = (event: any) => {
+    // setValue('zone_name', event.target.value);
+    console.log(event.target.value, 'event.target.value');
+    console.log(zone_name, 'zone_name');
+    if (zone_name) {
+      const cameraId = event.target.value === 'order' ? 'cam1' : 'cam2';
+      setValue('camera_id', cameraId);
+      trigergetFrameConfigBycamera({ camera_id: cameraId });
+    }
+  };
+
+  // const onSubmit: SubmitHandler<SearchFormType> = (data) => console.log(data);
   // const [isChecked, setIsChecked] = useState(false);
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -91,7 +105,10 @@ export default function SearchForm({ getDataFrame, getDataSearch, getStatus }: S
                     labelId='camera_id-label'
                     id='camera_id'
                     value={field.value}
-                    onChange={field.onChange}
+                    onChange={(e) => {
+                      field.onChange(e); // update RHF internal state
+                      changeCamera(e); // your custom logic
+                    }}
                     input={<OutlinedInput label='Select Camera' />} // 👈 label passed here
                     MenuProps={MenuProps}
                   >
@@ -118,7 +135,10 @@ export default function SearchForm({ getDataFrame, getDataSearch, getStatus }: S
                     id='zone'
                     // disabled
                     value={field.value ?? ''} // 👈 controlled by RHF
-                    onChange={field.onChange}
+                    onChange={(e) => {
+                      field.onChange(e); // update RHF internal state
+                      changeZone(e); // your custom logic
+                    }}
                     input={<OutlinedInput label='Select Zone' />}
                     MenuProps={MenuProps}
                   >

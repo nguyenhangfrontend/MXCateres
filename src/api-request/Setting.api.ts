@@ -28,7 +28,10 @@ export const SettingApi = createApi({
 
     getFrameConfigBycamera: builder.query<any, SearchFormType>({
       query: (params) => ({
-        url: `${AI_BOX_URL}/api/ai/zone/get_frame_and_config`,
+        url:
+          params.camera_id === 'cam1'
+            ? `${ORDER_URL}/api/ai/zone/get_frame_and_config`
+            : `${PICKUP_URL}/api/ai/zone/get_frame_and_config`, // Replace with the correct alternative endpoint if needed
         method: 'GET',
         params,
       }),
