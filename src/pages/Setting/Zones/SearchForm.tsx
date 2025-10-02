@@ -46,6 +46,7 @@ export default function SearchForm({ getDataFrame, getDataSearch, getStatus }: S
     // console.log('cameraId', cameraId);
     if (camera_id) {
       trigergetFrameConfigBycamera({ camera_id: camera_id });
+      setValue('zone_name', camera_id === 'cam1' ? 'order' : 'pickup');
     }
   }, [camera_id]);
 
@@ -57,14 +58,14 @@ export default function SearchForm({ getDataFrame, getDataSearch, getStatus }: S
   useEffect(() => {
     if (data?.data) {
       getDataFrame(data?.data);
-
+      console.log(data?.data?.zone_name);
       if (data?.data?.zone_name) {
         // console.log('data?.zone_name', data?.zone_name);
-        setValue('zone_name', data?.data?.zone_name); // ✅ update form value
+        // ✅ update form value
       }
     }
     getStatus(data?.status);
-  }, [data, setValue]);
+  }, [data]);
 
   console.log('data', data);
 
