@@ -24,18 +24,18 @@ const SetingZone: React.FC = () => {
   const [dataFormChange, setSearchForm] = useState<any>();
   const [createZone] = useCreateZoneMutation();
 
-  // console.log(dataFrame, "dataFrame");
-
   // 🔹 Load natural image size
   useEffect(() => {
-    if (dataFrame?.frame_base64) {
+    console.log(dataFrame, 'dataFrame');
+    if (dataFrame) {
+      console.log(dataFrame.frame_base64, 'dataFrame.frame_base64');
       const img = new Image();
       img.src = dataFrame?.frame_base64;
       img.onload = () => {
         setImageSize({ width: img.naturalWidth, height: img.naturalHeight });
       };
     }
-  }, [dataFrame, dataFrame?.frame_base64]);
+  }, [dataFrame]);
 
   const width = imageSize?.width ?? 0;
   const height = imageSize?.height ?? 0;
@@ -54,6 +54,7 @@ const SetingZone: React.FC = () => {
 
   // 🔹 Reusable save logic
   const savePolygon = (layers: any) => {
+    console.log(dataFormChange, 'dataFormChange');
     // console.log('layers', layers);
     if (layers) {
       layers.eachLayer((layer: any) => {
@@ -83,15 +84,30 @@ const SetingZone: React.FC = () => {
   const handleCreated = (e: any) => {
     const fakeGroup = new L.FeatureGroup();
     fakeGroup.addLayer(e.layer);
-    savePolygon(fakeGroup);
+    if (dataFormChange?.zone_name && dataFormChange?.camera_id) {
+      savePolygon(fakeGroup);
+    } else {
+      alert('Please select camera and zone before drawing');
+      setDataFrameFromCamera(dataFrame);
+    }
   };
 
   // 🔹 Directly use edited group
   const handleEdited = (e: any) => {
-    savePolygon(e.layers);
+    if (dataFormChange?.zone_name && dataFormChange?.camera_id) {
+      savePolygon(e.layers);
+    } else {
+      alert('Please select camera and zone before drawing');
+      setDataFrameFromCamera(dataFrame);
+    }
   };
   const handleDeleted = () => {
-    savePolygon(undefined);
+    if (dataFormChange?.zone_name && dataFormChange?.camera_id) {
+      savePolygon(undefined);
+    } else {
+      alert('Please select camera and zone before deleting');
+      setDataFrameFromCamera(dataFrame);
+    }
   };
 
   // ===============================
@@ -120,6 +136,7 @@ const SetingZone: React.FC = () => {
     setStatus(status);
   };
   const getDataSearch = (data: any) => {
+    console.log(data, 'data in page');
     setSearchForm(data);
     // handle search later
   };

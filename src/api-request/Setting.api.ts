@@ -5,6 +5,8 @@ import { CustomerDetailResponse, WaitingTimeDetailResponse } from 'src/src/pages
 import { SearchFormType } from '@/pages/Setting/Zones/types';
 
 const AI_BOX_URL = import.meta.env.VITE_AI_BOX_URL;
+const ORDER_URL = import.meta.env.VITE_ORDER_URL;
+const PICKUP_URL = import.meta.env.VITE_PICKUP_URL;
 
 export const SettingApi = createApi({
   reducerPath: 'SettingApi',
@@ -14,7 +16,10 @@ export const SettingApi = createApi({
   endpoints: (builder) => ({
     createZone: builder.mutation<any, any>({
       query: (body) => ({
-        url: `${AI_BOX_URL}/api/ai/zone/setting_camera_config`,
+        url:
+          body.zone_name === 'order'
+            ? `${ORDER_URL}/api/ai/zone/setting_camera_config`
+            : `${PICKUP_URL}/api/ai/zone/setting_camera_config`, // Replace with the correct alternative endpoint if needed
         method: 'POST',
         body,
       }),
@@ -23,7 +28,10 @@ export const SettingApi = createApi({
 
     getFrameConfigBycamera: builder.query<any, SearchFormType>({
       query: (params) => ({
-        url: `${AI_BOX_URL}/api/ai/zone/get_frame_and_config`,
+        url:
+          params.camera_id === 'cam1'
+            ? `${ORDER_URL}/api/ai/zone/get_frame_and_config`
+            : `${PICKUP_URL}/api/ai/zone/get_frame_and_config`, // Replace with the correct alternative endpoint if needed
         method: 'GET',
         params,
       }),
