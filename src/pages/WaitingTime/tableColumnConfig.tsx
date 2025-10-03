@@ -73,7 +73,7 @@ export function useColumns({ detailWaitingTime }: ColumnType) {
         flex: 0.7,
         renderCell: (params) => (
           <span className='text-sm text-gray-700 dark:text-gray-300'>
-            {moment(params.value).format('DD/MM/YYYY HH:mm:ss')}
+            {params.value ? moment(params.value).format('DD/MM/YYYY HH:mm:ss') : ''}
           </span>
         ),
       },
