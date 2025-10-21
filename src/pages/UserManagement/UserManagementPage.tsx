@@ -100,7 +100,7 @@ export default function UserManagementPage() {
 
           <ModalDetailCustomer data={userData} isOpen={isModalOpen} onClose={handleCloseModal} />
         </ComponentCard>
-        {dataTable.length && (
+        {!!dataTable.length && (
           <PaginationFixed
             onSearch={onSearch}
             pagination={pagination}

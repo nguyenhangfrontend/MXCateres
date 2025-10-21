@@ -98,7 +98,7 @@ export default function UserManagementPage() {
         </ComponentCard>
         <ComponentCard title='Waiting Time List'>
           <BasicTableOne pagination={false} tableData={dataTable || []} column={{ columns }} />
-          {dataTable.length && (
+          {!!dataTable.length && (
             <PaginationFixed
               onSearch={onSearch}
               pagination={pagination}
