@@ -20,14 +20,13 @@ export default function UserManagementPage() {
   const [onSearch, setOnSearch] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [waitingTimeDetailData, setWaitingTimeData] = useState<WaitingTimeDataType>();
-  const [getWaittingTimeList, data] = useLazyGetWaitingTimeListQuery();
-  console.log('data', data);
-
-  console.log("paginationnnn", pageNumber, pagination);
+  const [getWaittingTimeList, { data, isLoading }] = useLazyGetWaitingTimeListQuery({
+    pollingInterval: 10000,
+  });
 
   const [searchedForm, setSeachedForm] = useState<SearchFormType>(defaultSearchValue);
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
-  const dataTable = (data?.data?.data || []).map((item, index) => {
+  const dataTable = (data?.data || []).map((item, index) => {
     return {
       ...item,
       id: index + 1,
@@ -38,10 +37,8 @@ export default function UserManagementPage() {
   // console.log('dataTable', dataTable);
 
   useEffect(() => {
-    setPagination({ ...pagination, total: data?.data?.pagination?.total });
-  }, [data?.data?.pagination]);
-
-  console.log('data', data);
+    setPagination({ ...pagination, total: data?.pagination?.total });
+  }, [data?.pagination]);
   useEffect(() => {
     getWaittingTimeList({
       ...defaultSearchValue,
@@ -72,7 +69,7 @@ export default function UserManagementPage() {
   const handleCloseModal = () => setIsModalOpen(false);
   const { columns } = useColumns({ detailWaitingTime });
 
-  const handleSearch = (formValues: SearchFormType) => {
+  const handleSearch = async (formValues: SearchFormType) => {
     setOnSearch(true);
     setSeachedForm(formValues);
     const parrams = {
@@ -84,16 +81,16 @@ export default function UserManagementPage() {
     };
     // console.log('parrams', parrams);
 
-    getWaittingTimeList(parrams);
+    await getWaittingTimeList(parrams);
+    setOnSearch(false);
   };
-
   return (
     <>
       {/* <PageMeta
         title='React.js Basic Tables Dashboard | TailAdmin - Next.js Admin Dashboard Template'
         description='This is React.js Basic Tables Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template'
       /> */}
-      <Loading isOpen={data?.status === 'pending'} />
+      <Loading isOpen={isLoading || onSearch} />
       <PageBreadcrumb pageTitle='Waiting Time Page' />
       <div className='space-y-6'>
         <ComponentCard title='Filter Waiting Time'>

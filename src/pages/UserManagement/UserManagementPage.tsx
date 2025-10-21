@@ -24,24 +24,20 @@ export default function UserManagementPage() {
     id: 0,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [getUserList, data] = useLazyGetUserListQuery();
+  const [getUserList, { data, isLoading }] = useLazyGetUserListQuery({ pollingInterval: 10000 });
   const [pagination, setPagination] = useState<PaginationType>(defaultPagination);
   const [searchedForm, setSeachedForm] = useState<SearchFormType>(defaultSearchValue);
   const imageUrl = import.meta.env.VITE_IMAGE_URL;
-
-  // console.log('data', data);
-  // console.log('data?.pagination', data?.pagination);
-  const dataTable = (data?.data?.records || []).map((item, index) => {
+  const dataTable = (data?.records || []).map((item, index) => {
     return {
       ...item,
       evidenceThumbnail: `${imageUrl}${item.evidenceThumbnail}`,
     };
   });
 
-  // console.log('dataPagination', dataPagination);
   useEffect(() => {
-    setPagination({ ...pagination, total: data?.data?.pagination?.total });
-  }, [data?.data?.pagination]);
+    setPagination({ ...pagination, total: data?.pagination?.total });
+  }, [data?.pagination]);
   useEffect(() => {
     getUserList({
       ...defaultSearchValue,
@@ -64,7 +60,6 @@ export default function UserManagementPage() {
     getUserList(parrams);
   };
   const detailCustomer = (data: UserType) => {
-    // console.log('detailCustomer', data);
     setDataCustomer(data);
     setIsModalOpen(true);
   };
@@ -72,7 +67,7 @@ export default function UserManagementPage() {
   const handleCloseModal = () => setIsModalOpen(false);
   const { columns } = useColumns({ detailCustomer });
 
-  const handleSearch = (formValues: SearchFormType) => {
+  const handleSearch = async (formValues: SearchFormType) => {
     setOnSearch(true);
     setSeachedForm(formValues);
     const parrams = {
@@ -84,7 +79,8 @@ export default function UserManagementPage() {
     };
     // console.log('parrams', parrams);
 
-    getUserList(parrams);
+    await getUserList(parrams);
+    setOnSearch(false);
   };
 
   return (
@@ -93,7 +89,7 @@ export default function UserManagementPage() {
         title='React.js Basic Tables Dashboard | TailAdmin - Next.js Admin Dashboard Template'
         description='This is React.js Basic Tables Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template'
       /> */}
-      <Loading isOpen={data?.status === 'pending'} />
+      <Loading isOpen={isLoading || onSearch} />
       <PageBreadcrumb pageTitle='Customer Management Page' />
       <div className='space-y-6'>
         <ComponentCard title='Filter Customer'>

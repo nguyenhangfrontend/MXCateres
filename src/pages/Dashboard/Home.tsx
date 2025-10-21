@@ -10,12 +10,12 @@ import OrderStatusCircle from '@/pages/Dashboard/ecommerce/OrderStatusCircle';
 import CustomerChart from '@/pages/Dashboard/ecommerce/CustomerChart';
 import dayjs from 'dayjs';
 import { useLazyGetDashboardDataQuery } from 'src/src/api-request/Dashboard.api';
+import { Loading } from 'src/src/components/ui/loading';
 
 export default function Home() {
   const [onSearch, setOnSearch] = useState<boolean>(false);
   const [searchedForm, setSeachedForm] = useState<SearchFormType>(defaultSearchValue);
-  const [getDashboardData, { data }] = useLazyGetDashboardDataQuery();
-  console.log('data', data);
+  const [getDashboardData, { data, isLoading }] = useLazyGetDashboardDataQuery({ pollingInterval: 5000 });
 
   useEffect(() => {
     getDashboardData({
@@ -25,7 +25,7 @@ export default function Home() {
     });
   }, []);
 
-  const handleSearch = (formValues: SearchFormType) => {
+  const handleSearch = async (formValues: SearchFormType) => {
     // handle search later
     setOnSearch(true);
     setSeachedForm(formValues);
@@ -34,9 +34,9 @@ export default function Home() {
       from: dayjs(formValues.from).format('YYYY-MM-DD'),
       to: dayjs(formValues.to).format('YYYY-MM-DD'),
     };
-    console.log('params', params);
 
-    getDashboardData(params);
+    await getDashboardData(params);
+    setOnSearch(false);
   };
 
   return (
@@ -49,7 +49,7 @@ export default function Home() {
       <ComponentCard className='mb-[20px]' title='Filter'>
         <SearchForm handleSearch={handleSearch} />
       </ComponentCard>
-
+      <Loading isOpen={isLoading || onSearch} />
       {data && (
         <>
           <div className='grid grid-cols-12 gap-4 md:gap-6'>

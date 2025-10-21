@@ -12,7 +12,7 @@ export type WaitingTimeDataType = {
   endTime: string;
   evidenceThumbnail: envidenceType;
   customerProfileUrl: string;
-  status: number;
+  status: string;
   isLeft: boolean;
 };
 

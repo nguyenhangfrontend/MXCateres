@@ -73,7 +73,7 @@ export function useColumns({ detailWaitingTime }: ColumnType) {
         flex: 0.7,
         renderCell: (params) => (
           <span className='text-sm text-gray-700 dark:text-gray-300'>
-            {params.value ? moment(params.value).format('DD/MM/YYYY HH:mm:ss') : ''}
+            {params.value && params.row.status !== 'pending' ? moment(params.value).format('DD/MM/YYYY HH:mm:ss') : ''}
           </span>
         ),
       },
@@ -119,7 +119,7 @@ export function useColumns({ detailWaitingTime }: ColumnType) {
           const { value, row } = params;
           let bg = '#fee2e2'; // 🔴 default red background
           let color = '#991b1b'; // 🔴 default red text
-          const label = value;
+          const label = row?.isLeft && value?.or ? 'Left' : value;
 
           if (value === 'completed') {
             bg = '#dcfce7c4'; // light green
