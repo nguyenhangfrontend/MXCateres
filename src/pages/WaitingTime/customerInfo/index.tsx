@@ -181,8 +181,9 @@ export default function CustomerInfoComponent({ dataCustomer }: CustomerProps) {
                   <div className='relative' onDoubleClick={() => handleOpen(item.imageUrl)}>
                     <img
                       src={`${imageUrl}${item.imageUrl}`}
-                      className='w-full h-64 object-cover rounded-lg'
-                      alt={item.label}
+                      height={300}
+                      className='max-h-[501px] object-contain w-full self-start'
+                      style={{ height: '500px' }}
                     />
                     <div className='absolute bottom-0 w-full bg-black/50 text-white p-2 text-sm flex justify-between items-center'>
                       <div>{item.label}</div>
