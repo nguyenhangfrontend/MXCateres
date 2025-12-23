@@ -8,17 +8,17 @@ interface EcommerceMetricsProps {
 
 export default function EcommerceMetrics({ data }: EcommerceMetricsProps) {
   return (
-    <div className='grid grid-cols-1 gap-4 sm:grid-cols-4 md:gap-6'>
+    <div className="grid grid-cols-1 sm:grid-cols-5 gap-2 md:gap-2">
       {/* Total Customers */}
-      <div className='rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6'>
+      <div className='rounded-2xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-white/[0.03] md:p-4'>
         <div className='flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800'>
           <GroupIcon className='text-gray-800 size-6 dark:text-white/90' />
         </div>
 
-        <div className='text-sm text-gray-500 dark:text-gray-400 mt-5'>Total Customers</div>
+        <div className='text-sm text-gray-400 dark:text-gray-300 mt-5'>Total Customers</div>
         <div className='flex items-end justify-between '>
           <div>
-            <h4 className='mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90'>
+            <h4 className='mt-2 font-bold text-gray-800 text-title-xs dark:text-white/90'>
               {data.totalCustomer.toLocaleString()}
             </h4>
           </div>
@@ -29,16 +29,16 @@ export default function EcommerceMetrics({ data }: EcommerceMetricsProps) {
         </div>
       </div>
 
-      {/* Total Orders */}
-      <div className='rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6'>
+      {/* Order Time */}
+      <div className='rounded-2xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-white/[0.03] md:p-4'>
         <div className='flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800'>
           <BoxIconLine className='text-gray-800 size-6 dark:text-white/90' />
         </div>
-        <div className='text-sm text-gray-500 dark:text-gray-400 mt-5'>Total Orders</div>
+        <div className='text-sm text-gray-400 dark:text-gray-300 mt-5'>Order Time</div>
         <div className='flex items-end justify-between '>
           <div>
-            <h4 className='mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90'>
-              {data.totalOrders.toLocaleString()}
+            <h4 className='mt-2 font-bold text-gray-800 text-title-xs dark:text-white/90'>
+              {Math.round(data.orderZoneWaitingTime)} minutes
             </h4>
           </div>
 
@@ -49,15 +49,15 @@ export default function EcommerceMetrics({ data }: EcommerceMetricsProps) {
         </div>
       </div>
 
-      {/* Leave Customers */}
-      <div className='rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6'>
+      {/* Processing Time */}
+      <div className='rounded-2xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-white/[0.03] md:p-4'>
         <div className='flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800'>
           <BoxIconLine className='text-gray-800 size-6 dark:text-white/90' />
         </div>
-        <div className='text-sm text-gray-500 dark:text-gray-400 mt-5'>Left Customers</div>
+        <div className='text-sm text-gray-400 dark:text-gray-300 mt-5'>Processing Time</div>
         <div className='flex items-end justify-between'>
           <div>
-            <h4 className='mt-2 font-bold text-red-500 text-title-sm '>{data.leftCustomers.toLocaleString()}</h4>
+            <h4 className='mt-2 font-bold text-gray-800 text-title-xs dark:text-white/90'>{Math.round(data.processingZoneWaitingTime)} minutes</h4>
           </div>
 
           {/* <Badge color='error'>
@@ -67,16 +67,36 @@ export default function EcommerceMetrics({ data }: EcommerceMetricsProps) {
         </div>
       </div>
 
-      {/* Waiting Time Average */}
-      <div className='rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6'>
+      {/* Picking Time */}
+      <div className='rounded-2xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-white/[0.03] md:p-4'>
         <div className='flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800'>
           <BoxIconLine className='text-gray-800 size-6 dark:text-white/90' />
         </div>
-        <div className='text-sm text-gray-500 dark:text-gray-400 mt-5'>Waiting time average</div>
+        <div className='text-sm text-gray-400 dark:text-gray-300 mt-5'>Picking Time</div>
         <div className='flex items-end justify-between'>
           <div>
-            <h4 className='mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90'>
-              {Math.round(data.waitingTimeAverage)} minutes
+            <h4 className='mt-2 font-bold text-gray-800 text-title-xs dark:text-white/90'>
+              {Math.round(data.pickupZoneWaitingTime)} minutes
+            </h4>
+          </div>
+
+          {/* <Badge color='error'>
+            <ArrowDownIcon />
+            9.05%
+          </Badge> */}
+        </div>
+      </div>
+      
+      {/* Picking Time */}
+      <div className='rounded-2xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-white/[0.03] md:p-4'>
+        <div className='flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800'>
+          <BoxIconLine className='text-gray-800 size-6 dark:text-white/90' />
+        </div>
+        <div className='text-sm text-gray-400 dark:text-gray-300 mt-5'>Picking Time</div>
+        <div className='flex items-end justify-between'>
+          <div>
+            <h4 className='mt-2 font-bold text-gray-800 text-title-xs dark:text-white/90'>
+              {Math.round(data.pickupZoneWaitingTime)} minutes
             </h4>
           </div>
 

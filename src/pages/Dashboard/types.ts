@@ -46,8 +46,9 @@ export type CustomerDetailTypeParams = {
 export interface DashboardResponse {
   status: string;
   totalCustomer: number;
-  totalOrders: number;
-  leftCustomers: number;
+  orderZoneWaitingTime: number;
+  pickupZoneWaitingTime: number;
+  processingZoneWaitingTime: number;
   waitingTimeAverage: number;
   orderStatusChart: {
     slow: number;
